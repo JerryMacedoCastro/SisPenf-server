@@ -1,12 +1,11 @@
 import express from 'express';
+import routes from './routes';
 
 const app = express();
 
 app.use(express.json());
+app.use(routes);
 
-app.get("/", (_req, res) => {
-  res.send("Hi Docker, thanks rocketseat!!!");
-});
 app.listen(3333, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port 3333');
