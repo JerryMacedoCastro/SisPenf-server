@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
-    "allowJs": true,
+   //"allowJs": true,
     // "paths": {
     //   "@modules/*": ["modules/*"],
     //   "@config/*": ["config/*"],
@@ -16,6 +16,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "composite": true
+
   }
 }
