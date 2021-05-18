@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (_req, res) => {
-  res.send("Hi Docker!!!");
+  res.send("Hi Docker, thanks rocketseat!!!");
 });
 app.listen(3333, () => {
   // eslint-disable-next-line no-console
