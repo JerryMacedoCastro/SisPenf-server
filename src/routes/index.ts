@@ -8,6 +8,7 @@ routes.get('/', (_req, res) => {
   res.send('Hi Docker, thanks rocketseat!!!');
 });
 
-routes.post('/user', userController.Create);
+routes.post('/user', userController.createUser);
+routes.get('/user', userController.getAllUsers);
 
 export default routes;

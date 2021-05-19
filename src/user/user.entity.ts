@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { IUser } from './user.dto';
 
 @Entity()
-export class User {
+export class User implements IUser {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,6 +11,12 @@ export class User {
 
   @Column()
   lastName: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
 
   @Column()
   isActive: boolean;
