@@ -1,9 +1,13 @@
 import { Router } from 'express';
+import UserController from '../user/user.controller';
 
 const routes = Router();
 
-routes.get("/", (_req, res) => {
-  res.send("Hi Docker, thanks rocketseat!!!");
+const userController = new UserController();
+routes.get('/', (_req, res) => {
+  res.send('Hi Docker, thanks rocketseat!!!');
 });
+
+routes.post('/user', userController.Create);
 
 export default routes;
