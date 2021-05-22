@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import { createConnection } from 'typeorm';
-import config from './ormconfig';
+import config from '../ormconfig';
 import express from 'express';
 import routes from './routes';
 

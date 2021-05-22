@@ -7,4 +7,5 @@ export interface IUser {
   email: string;
   password: string;
   isActive: boolean;
+  createdAt: Date;
 }

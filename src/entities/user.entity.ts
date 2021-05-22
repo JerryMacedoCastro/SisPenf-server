@@ -1,5 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { IUser } from './user.dto';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
+import { IUser } from '../interfaces/user.interface';
 
 @Entity()
 export class User implements IUser {
@@ -20,4 +25,7 @@ export class User implements IUser {
 
   @Column()
   isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
