@@ -1,5 +1,3 @@
-import { StringifyOptions } from 'querystring';
-
 export interface IUser {
   id: number;
   firstName: string;
