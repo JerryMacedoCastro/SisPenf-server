@@ -1,10 +1,15 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class CreateHospital1621689141377 implements MigrationInterface {
+export class CreateInfirmary1621712236947 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'hospital',
+        name: 'infirmary',
         columns: [
           {
             name: 'id',
@@ -12,19 +17,27 @@ export class CreateHospital1621689141377 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'name',
+            name: 'hospitalId',
+            type: 'int',
+          },
+          {
+            name: 'description',
             type: 'varchar',
           },
           {
             name: 'isActive',
             type: 'boolean',
           },
-          {
-            name: 'createdAt',
-            type: 'timestamp',
-            default: 'now()',
-          },
         ],
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'infirmary',
+      new TableForeignKey({
+        columnNames: ['hospitalId'],
+        referencedTableName: 'hospital',
+        referencedColumnNames: ['id'],
       }),
     );
   }
