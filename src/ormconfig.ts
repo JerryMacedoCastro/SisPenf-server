@@ -1,5 +1,4 @@
 import { ConnectionOptions } from 'typeorm';
-import path from 'path';
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -8,9 +7,11 @@ const config: ConnectionOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  // entities: ['src/entity/**/*.ts'],
-  entities: ['src/**/*.entity.ts'],
-  migrations: ['src/migration/**/*.ts'],
+  entities: ['src/entities/**/*.entity.ts'],
+  migrations: ['./src/migrations/**.ts'],
+  cli: {
+    migrationsDir: './src/migrations',
+  },
   subscribers: ['src/subscriber/**/*.ts'],
   synchronize: true,
 };

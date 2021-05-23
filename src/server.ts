@@ -4,7 +4,6 @@ import { createConnection } from 'typeorm';
 import config from './ormconfig';
 import express from 'express';
 import routes from './routes';
-import path from 'path';
 
 const start = async () => {
   try {
@@ -17,7 +16,6 @@ const start = async () => {
   app.use(routes);
 
   app.listen(3333, () => {
-    // eslint-disable-next-line no-console
     console.log('Listening on port 3333');
   });
 };
