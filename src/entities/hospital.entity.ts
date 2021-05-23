@@ -16,7 +16,7 @@ export class Hospital implements IHospital {
   @Column()
   name: string;
 
-  @OneToMany(() => Infirmary, infirmary => infirmary.hospitalId)
+  @OneToMany(() => Infirmary, infirmary => infirmary.hospital)
   infirmaries: Infirmary[];
 
   @Column()

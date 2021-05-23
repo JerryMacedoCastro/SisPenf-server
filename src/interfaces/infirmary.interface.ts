@@ -2,7 +2,7 @@ import { Hospital } from '../entities/hospital.entity';
 
 export interface IInfirmary {
   id: number;
-  hospitalId: Hospital;
+  hospital: Hospital;
   description: string;
   isActive: boolean;
 }

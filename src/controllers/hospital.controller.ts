@@ -11,6 +11,7 @@ export default class HospitalController {
 
     try {
       const hospitalRepository = getRepository(Hospital);
+      console.log(hospitalRepository);
       const isExistingHospital = await hospitalRepository.findOne({
         name: name,
       });

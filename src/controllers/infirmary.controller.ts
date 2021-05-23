@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Infirmary } from '../entities/infirmary.entity';
 import { Hospital } from '../entities/hospital.entity';
 
-export default class HospitalController {
+export default class InfirmaryController {
   public async createInfirmary(
     request: Request,
     response: Response,
@@ -20,7 +20,7 @@ export default class HospitalController {
       const infirmaryRepository = getRepository(Infirmary);
       const newInfirmary = infirmaryRepository.create({
         description,
-        hospitalId,
+        hospital: hospitalId,
         isActive: true,
       });
       console.log(newInfirmary);
@@ -37,8 +37,8 @@ export default class HospitalController {
     response: Response,
   ): Promise<Response> {
     const { numberOfInfirmaries, hospitalId } = request.body;
-    const quantity = Number(numberOfInfirmaries);
     try {
+      const quantity = Number(numberOfInfirmaries);
       const hospitalRepository = getRepository(Hospital);
       const isExistingHospital = await hospitalRepository.findOne(hospitalId);
       if (!isExistingHospital) {
@@ -47,20 +47,20 @@ export default class HospitalController {
 
       const infirmaryRepository = getRepository(Infirmary);
       const currentInfirmaries = await infirmaryRepository.find({
-        hospitalId,
+        hospital: hospitalId,
       });
 
       let initialValue = currentInfirmaries.length;
       for (let index = 0; index < quantity; index++) {
         const newInfirmary = infirmaryRepository.create({
           description: `Enfermaria ${initialValue + 1}`,
-          hospitalId,
+          hospital: hospitalId,
           isActive: true,
         });
         await infirmaryRepository.save(newInfirmary);
         initialValue++;
       }
-      const res = await infirmaryRepository.find({ hospitalId });
+      const res = await infirmaryRepository.find({ hospital: hospitalId });
       return response.status(201).send(res);
     } catch (error) {
       return response.status(400).send(error.message);
@@ -74,7 +74,7 @@ export default class HospitalController {
     try {
       const infirmaryRepository = getRepository(Infirmary);
       const infirmaries = await infirmaryRepository.find({
-        relations: ['hospitalId'],
+        relations: ['hospital'],
       });
 
       return response.status(200).send(infirmaries);
