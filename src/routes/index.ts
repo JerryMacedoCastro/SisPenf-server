@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import HospitalController from '../controllers/hospital.comtroller';
+import HospitalController from '../controllers/hospital.controller';
 import UserController from '../controllers/user.controller';
 import InfirmaryController from '../controllers/infirmary.controller';
 
@@ -20,6 +20,7 @@ routes.post('/hospital', hospitalController.createHospital);
 routes.get('/hospital', hospitalController.getAllHospitals);
 
 routes.post('/infirmary', infirmaryController.createInfirmary);
+routes.post('/infirmaries', infirmaryController.createSeveralInfirmaries);
 routes.get('/infirmary', infirmaryController.getAllInfirmaries);
 
 export default routes;

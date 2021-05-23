@@ -15,7 +15,6 @@ export default class HospitalController {
       const isExistingHospital = await hospitalRepository.findOne(hospitalId);
       if (!isExistingHospital) {
         throw new Error(`The given hospital does not exist!`);
-        console.log('Encontrou o hopital');
       }
 
       const infirmaryRepository = getRepository(Infirmary);
@@ -27,6 +26,41 @@ export default class HospitalController {
       console.log(newInfirmary);
       const res = await infirmaryRepository.save(newInfirmary);
 
+      return response.status(201).send(res);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
+  public async createSeveralInfirmaries(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { numberOfInfirmaries, hospitalId } = request.body;
+    const quantity = Number(numberOfInfirmaries);
+    try {
+      const hospitalRepository = getRepository(Hospital);
+      const isExistingHospital = await hospitalRepository.findOne(hospitalId);
+      if (!isExistingHospital) {
+        throw new Error(`The given hospital does not exist!`);
+      }
+
+      const infirmaryRepository = getRepository(Infirmary);
+      const currentInfirmaries = await infirmaryRepository.find({
+        hospitalId,
+      });
+
+      let initialValue = currentInfirmaries.length;
+      for (let index = 0; index < quantity; index++) {
+        const newInfirmary = infirmaryRepository.create({
+          description: `Enfermaria ${initialValue + 1}`,
+          hospitalId,
+          isActive: true,
+        });
+        await infirmaryRepository.save(newInfirmary);
+        initialValue++;
+      }
+      const res = await infirmaryRepository.find({ hospitalId });
       return response.status(201).send(res);
     } catch (error) {
       return response.status(400).send(error.message);
