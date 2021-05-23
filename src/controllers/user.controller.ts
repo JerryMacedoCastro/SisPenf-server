@@ -33,14 +33,19 @@ export default class UserController {
     }
   }
 
-  public async getAllUsers(
-    _request: Request,
+  public async getUsers(
+    request: Request,
     response: Response,
   ): Promise<Response> {
     try {
+      const { userId } = request.params;
       const userRepository = getRepository(User);
+      if (userId) {
+        const user = await userRepository.findOne(userId);
+        if (user) return response.status(200).send(user);
+        throw new Error('User not found');
+      }
       const allUsers = await userRepository.find();
-
       return response.status(200).send(allUsers);
     } catch (error) {
       return response.status(400).send(error.message);

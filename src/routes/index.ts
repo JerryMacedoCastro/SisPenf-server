@@ -16,16 +16,16 @@ routes.get('/', (_req, res) => {
 });
 
 routes.post('/user', userController.createUser);
-routes.get('/user', userController.getAllUsers);
+routes.get('/user/:userId?', userController.getUsers);
 
 routes.post('/hospital', hospitalController.createHospital);
 routes.get('/hospital', hospitalController.getAllHospitals);
 
 routes.post('/infirmary', infirmaryController.createInfirmary);
 routes.post('/infirmaries', infirmaryController.createSeveralInfirmaries);
-routes.get('/infirmary', infirmaryController.getAllInfirmaries);
+routes.get('/infirmary/:hospitalId?', infirmaryController.getInfirmaries);
 
-routes.get('/hospitalbed', hospitalBedController.getHospitalBeds);
+routes.get('/hospitalbed/:infirmaryId?', hospitalBedController.getHospitalBeds);
 routes.post('/hospitalbeds', hospitalBedController.createSeveralHospitalBeds);
 routes.post('/hospitalbed', hospitalBedController.createHospitalBed);
 

@@ -67,17 +67,27 @@ export default class InfirmaryController {
     }
   }
 
-  public async getAllInfirmaries(
-    _request: Request,
+  public async getInfirmaries(
+    request: Request,
     response: Response,
   ): Promise<Response> {
     try {
+      const { hospitalId } = request.params;
       const infirmaryRepository = getRepository(Infirmary);
-      const infirmaries = await infirmaryRepository.find({
-        relations: ['hospital'],
-      });
 
-      return response.status(200).send(infirmaries);
+      if (hospitalId) {
+        const infirmaries = await infirmaryRepository.find({
+          where: { hospital: hospitalId },
+          relations: ['hospital'],
+        });
+        return response.status(200).send(infirmaries);
+      } else {
+        const infirmaries = await infirmaryRepository.find({
+          relations: ['hospital'],
+        });
+
+        return response.status(200).send(infirmaries);
+      }
     } catch (error) {
       return response.status(400).send(error.message);
     }
