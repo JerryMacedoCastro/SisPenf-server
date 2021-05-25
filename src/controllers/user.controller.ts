@@ -8,7 +8,7 @@ export default class UserController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { email, firstName, lastName, password } = request.body;
+    const { email, name, cpf, position, password } = request.body;
 
     try {
       const userRepository = getRepository(User);
@@ -19,11 +19,12 @@ export default class UserController {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = userRepository.create({
-        firstName,
-        lastName,
+        name,
         email,
+        cpf,
+        position,
         password: hashedPassword,
-        isActive: true,
+        isActive: false,
       });
       const res = await userRepository.save(user);
 

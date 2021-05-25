@@ -11,16 +11,19 @@ export class User implements IUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
+  @Column({ nullable: false })
+  name: string;
 
-  @Column()
-  lastName: string;
-
-  @Column()
+  @Column({ nullable: false })
   email: string;
 
+  @Column({ nullable: false })
+  cpf: string;
+
   @Column()
+  position: string;
+
+  @Column({ nullable: false })
   password: string;
 
   @Column()
