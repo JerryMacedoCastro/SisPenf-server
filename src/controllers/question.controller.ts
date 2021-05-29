@@ -4,7 +4,7 @@ import { Question } from '../entities/question.entity';
 import { QuestionType } from '../entities/questionType.entity';
 
 export default class QuestionController {
-  async createQuestion(
+  async CreateQuestion(
     request: Request,
     response: Response,
   ): Promise<Response> {
@@ -17,15 +17,29 @@ export default class QuestionController {
         throw new Error('The given question type does not exist!');
 
       const questionRepository = getRepository(Question);
-      questionRepository.create({
+      const newQuestion = questionRepository.create({
         description,
         type,
         allowComment,
       });
+
+      await questionRepository.save(newQuestion);
+      return response.status(200).send(newQuestion);
     } catch (error) {
       return response.status(400).send(error.message);
     }
+  }
 
-    return response.send('');
+  async GetQuestions(_request: Request, response: Response): Promise<Response> {
+    try {
+      const questionRepository = getRepository(Question);
+      const res = await questionRepository.find({
+        relations: ['type'],
+      });
+
+      return response.status(200).send(res);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
   }
 }

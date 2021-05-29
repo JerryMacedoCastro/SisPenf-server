@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IQuestionType } from '../interfaces/questionType.interface';
+import { Question } from './question.entity';
 
 @Entity()
 export class QuestionType implements IQuestionType {
@@ -11,4 +12,7 @@ export class QuestionType implements IQuestionType {
 
   @Column()
   isActive: boolean;
+
+  @OneToMany(() => Question, question => question.type)
+  questions: Question[];
 }
