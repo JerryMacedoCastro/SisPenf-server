@@ -17,6 +17,12 @@ export default class QuestionController {
         throw new Error('The given question type does not exist!');
 
       const questionRepository = getRepository(Question);
+      const isExistingDescription = await questionRepository.findOne({
+        description: description,
+      });
+      if (isExistingDescription)
+        return response.status(200).send(isExistingDescription);
+
       const newQuestion = questionRepository.create({
         description,
         type,

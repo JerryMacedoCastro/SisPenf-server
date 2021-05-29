@@ -5,6 +5,7 @@ import InfirmaryController from '../controllers/infirmary.controller';
 import HospitalBedController from '../controllers/hospitalBed.controller';
 import QuestionTypeControler from '../controllers/questionType.controller';
 import QuestionController from '../controllers/question.controller';
+import QuestionOptionController from '../controllers/questionOption.controller';
 
 const routes = Router();
 
@@ -14,6 +15,7 @@ const infirmaryController = new InfirmaryController();
 const hospitalBedController = new HospitalBedController();
 const questionTypeController = new QuestionTypeControler();
 const questionController = new QuestionController();
+const questionOptionController = new QuestionOptionController();
 
 routes.get('/', (_req, res) => {
   res.send('Hello darkness my old friend!');
@@ -38,5 +40,8 @@ routes.get('/questiontype', questionTypeController.GetQuestionTypes);
 
 routes.post('/question', questionController.CreateQuestion);
 routes.get('/question', questionController.GetQuestions);
+
+routes.post('/questionoption', questionOptionController.CreateOption);
+routes.get('/questionoption', questionOptionController.GetOptios);
 
 export default routes;
