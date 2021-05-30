@@ -13,7 +13,7 @@ export class Hospital implements IHospital {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @OneToMany(() => Infirmary, infirmary => infirmary.hospital)

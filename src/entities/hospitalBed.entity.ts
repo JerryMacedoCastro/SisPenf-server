@@ -7,12 +7,14 @@ export class HospitalBed implements IHospitalBed {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Infirmary, infirmary => infirmary.hospitalBeds)
+  @ManyToOne(() => Infirmary, infirmary => infirmary.hospitalBeds, {
+    nullable: false,
+  })
   infirmary: Infirmary;
 
-  @Column()
+  @Column({ nullable: false })
   description: string;
 
-  @Column()
+  @Column({ nullable: false })
   isFilled: boolean;
 }

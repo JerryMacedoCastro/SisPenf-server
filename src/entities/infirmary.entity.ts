@@ -14,10 +14,12 @@ export class Infirmary implements IInfirmary {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Hospital, hospital => hospital.infirmaries)
+  @ManyToOne(() => Hospital, hospital => hospital.infirmaries, {
+    nullable: false,
+  })
   hospital: Hospital;
 
-  @Column()
+  @Column({ nullable: false })
   description: string;
 
   @OneToMany(() => HospitalBed, hospitalBed => hospitalBed.infirmary)
