@@ -94,7 +94,7 @@ export default class HospitalBedController {
         return response.status(200).send(res);
       } else {
         const res = await hospitalBedRepository.find({
-          relations: ['infirmary'],
+          relations: ['infirmary', 'infirmary.hospital'],
         });
         return response.status(200).send(res);
       }
