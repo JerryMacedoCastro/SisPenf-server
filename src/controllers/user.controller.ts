@@ -40,6 +40,7 @@ export default class UserController {
   ): Promise<Response> {
     try {
       const { userId } = request.params;
+
       const userRepository = getRepository(User);
       if (userId) {
         const user = await userRepository.findOne(userId);
