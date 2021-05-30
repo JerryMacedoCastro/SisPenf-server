@@ -5,8 +5,9 @@ import InfirmaryController from '../controllers/infirmary.controller';
 import HospitalBedController from '../controllers/hospitalBed.controller';
 import QuestionTypeControler from '../controllers/questionType.controller';
 import QuestionController from '../controllers/question.controller';
-import QuestionOptionController from '../controllers/Option.controller';
+import QuestionOptionController from '../controllers/option.controller';
 import PatientController from '../controllers/patient.controller';
+import AnserController from '../controllers/answer.controller';
 
 const routes = Router();
 
@@ -18,6 +19,7 @@ const questionTypeController = new QuestionTypeControler();
 const questionController = new QuestionController();
 const questionOptionController = new QuestionOptionController();
 const patientController = new PatientController();
+const answerController = new AnserController();
 
 routes.get('/', (_req, res) => {
   res.send('Hello darkness my old friend!');
@@ -48,4 +50,6 @@ routes.get('/option', questionOptionController.GetOptios);
 
 routes.post('/patient', patientController.CreatePatient);
 routes.get('/patient', patientController.GetPatient);
+
+routes.post('/answer', answerController.CreateAnswer);
 export default routes;
