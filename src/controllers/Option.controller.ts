@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { QuestionOption } from '../entities/questionOption.entity';
+import { Option } from '../entities/option.entity';
 
 export default class QuestionOptionController {
   async CreateOption(request: Request, response: Response): Promise<Response> {
     try {
       const { description } = request.body;
-      const optionRepository = getRepository(QuestionOption);
+      const optionRepository = getRepository(Option);
       const isExistingOption = await optionRepository.findOne({
         description: description,
       });
@@ -24,7 +24,7 @@ export default class QuestionOptionController {
 
   async GetOptios(_request: Request, response: Response): Promise<Response> {
     try {
-      const optionRepository = getRepository(QuestionOption);
+      const optionRepository = getRepository(Option);
       const options = await optionRepository.find();
 
       return response.status(200).send(options);

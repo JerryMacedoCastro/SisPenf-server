@@ -5,7 +5,7 @@ import InfirmaryController from '../controllers/infirmary.controller';
 import HospitalBedController from '../controllers/hospitalBed.controller';
 import QuestionTypeControler from '../controllers/questionType.controller';
 import QuestionController from '../controllers/question.controller';
-import QuestionOptionController from '../controllers/questionOption.controller';
+import QuestionOptionController from '../controllers/Option.controller';
 
 const routes = Router();
 
@@ -41,7 +41,7 @@ routes.get('/questiontype', questionTypeController.GetQuestionTypes);
 routes.post('/question', questionController.CreateQuestion);
 routes.get('/question', questionController.GetQuestions);
 
-routes.post('/questionoption', questionOptionController.CreateOption);
-routes.get('/questionoption', questionOptionController.GetOptios);
+routes.post('/option', questionOptionController.CreateOption);
+routes.get('/option', questionOptionController.GetOptios);
 
 export default routes;

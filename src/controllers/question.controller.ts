@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { Question } from '../entities/question.entity';
 import { QuestionType } from '../entities/questionType.entity';
+import { Option } from '../entities/option.entity';
 
 export default class QuestionController {
   async CreateQuestion(
@@ -9,7 +10,27 @@ export default class QuestionController {
     response: Response,
   ): Promise<Response> {
     try {
-      const { description, type, allowComment } = request.body;
+      const { description, type, allowComment, options } = request.body;
+
+      const optionRepository = getRepository(Option);
+
+      const optionsArray: { description: string }[] = options;
+      let newOptions: Option[] = [];
+
+      for (let index = 0; index < optionsArray.length; index++) {
+        const isExistingOption = await optionRepository.findOne({
+          description: optionsArray[index].description,
+        });
+        if (isExistingOption) {
+          newOptions = [...newOptions, isExistingOption];
+        } else {
+          const newOption = optionRepository.create({
+            description: optionsArray[index].description,
+          });
+          const createdOption = await optionRepository.save(newOption);
+          newOptions = [...newOptions, createdOption];
+        }
+      }
 
       const typeRepository = getRepository(QuestionType);
       const isExistingType = typeRepository.findOne(type);
@@ -21,12 +42,13 @@ export default class QuestionController {
         description: description,
       });
       if (isExistingDescription)
-        return response.status(200).send(isExistingDescription);
+        throw new Error('The given question already exist!');
 
       const newQuestion = questionRepository.create({
         description,
         type,
         allowComment,
+        options: newOptions,
       });
 
       await questionRepository.save(newQuestion);
@@ -40,7 +62,7 @@ export default class QuestionController {
     try {
       const questionRepository = getRepository(Question);
       const res = await questionRepository.find({
-        relations: ['type'],
+        relations: ['type', 'options'],
       });
 
       return response.status(200).send(res);

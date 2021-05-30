@@ -1,5 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IQuestion } from '../interfaces/question.interface';
+import { Option } from './option.entity';
 import { QuestionType } from './questionType.entity';
 
 @Entity()
@@ -17,4 +25,8 @@ export class Question implements IQuestion {
 
   @Column({ nullable: false })
   allowComment: boolean;
+
+  @ManyToMany(() => Option, option => option.questions)
+  @JoinTable()
+  options: Option[];
 }

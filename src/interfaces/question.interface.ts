@@ -1,3 +1,4 @@
+import { Option } from '../entities/option.entity';
 import { QuestionType } from '../entities/questionType.entity';
 
 export interface IQuestion {
@@ -5,4 +6,5 @@ export interface IQuestion {
   description: string;
   type: QuestionType;
   allowComment: boolean;
+  options: Option[];
 }
