@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToOne,
@@ -38,8 +39,8 @@ export class Answer implements IAnswer {
   question: Question;
 
   @ManyToMany(() => Option)
-  @JoinColumn()
-  option: Option[];
+  @JoinTable()
+  selectedOptions: Option[];
 
   @Column()
   comment: string;

@@ -39,8 +39,8 @@ export default class AnserController {
         user,
         question,
         patient,
-        option: selectedOptions,
-        comment: comment.trim(),
+        selectedOptions,
+        comment,
       });
 
       const createdAnswer = await answerRepository.save(newAnswer);
