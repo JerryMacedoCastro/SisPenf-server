@@ -9,9 +9,10 @@ export default class PatientController {
       const { name, birthdate, bed } = request.body;
       const bedId = Number(bed);
       const bedRepository = getRepository(HospitalBed);
-      const isExistingbed = await bedRepository.findOne(bedId);
-      if (!isExistingbed)
-        throw new Error('The given hospital bed does not exist');
+      const isExistingbed = await bedRepository.findOne({
+        where: { id: bedId, isFilled: false },
+      });
+      if (!isExistingbed) throw new Error('The given hospital bed unavailable');
 
       const patientRepository = getRepository(Patient);
       const newPatient = patientRepository.create({
