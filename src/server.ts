@@ -13,11 +13,10 @@ const start = async () => {
   }
   const app = express();
   app.use(express.json());
-  app.use(routes);
+  app.use('/sispenf/v1', routes);
 
   app.listen(3333, () => {
     console.log('Listening on port 3333');
   });
 };
-
 start();
