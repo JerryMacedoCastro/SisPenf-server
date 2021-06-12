@@ -35,6 +35,7 @@ export default class AnserController {
       }
 
       const answerRepository = getRepository(Answer);
+
       const newAnswer = answerRepository.create({
         user,
         question,
@@ -44,6 +45,7 @@ export default class AnserController {
       });
 
       const createdAnswer = await answerRepository.save(newAnswer);
+
       return response.status(200).send(createdAnswer);
     } catch (error) {
       return response.status(400).send(error.message);

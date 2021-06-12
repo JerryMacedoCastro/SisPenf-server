@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -20,16 +21,14 @@ export class Answer implements IAnswer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, {
+  @ManyToOne(() => User, user => user.answers, {
     nullable: false,
   })
-  @JoinColumn()
   user: User;
 
-  @OneToOne(() => Patient, {
+  @ManyToOne(() => Patient, patient => patient.answers, {
     nullable: false,
   })
-  @JoinColumn()
   patient: Patient;
 
   @OneToOne(() => Question, {

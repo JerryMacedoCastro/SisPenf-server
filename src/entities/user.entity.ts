@@ -3,8 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { IUser } from '../interfaces/user.interface';
+import { Answer } from './answer.entity';
 
 @Entity()
 export class User implements IUser {
@@ -25,6 +27,9 @@ export class User implements IUser {
 
   @Column({ nullable: false })
   password: string;
+
+  @OneToMany(() => Answer, answer => answer.user)
+  answers: Answer[];
 
   @Column()
   isActive: boolean;

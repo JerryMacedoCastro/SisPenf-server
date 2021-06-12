@@ -2,10 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IPatient } from '../interfaces/patient.interface';
+import { Answer } from './answer.entity';
 import { HospitalBed } from './hospitalBed.entity';
 
 @Entity()
@@ -19,6 +22,9 @@ export class Patient implements IPatient {
   @OneToOne(() => HospitalBed)
   @JoinColumn()
   hospitalBed: HospitalBed;
+
+  @OneToMany(() => Answer, answer => answer.patient)
+  answers: Answer[];
 
   @Column({ nullable: false })
   birthDate: Date;
