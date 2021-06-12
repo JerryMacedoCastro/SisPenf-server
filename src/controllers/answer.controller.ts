@@ -36,7 +36,15 @@ export default class AnserController {
 
       const answerRepository = getRepository(Answer);
 
+      const isUpdateQuestion = await answerRepository.findOne({
+        where: {
+          patient,
+          question,
+        },
+      });
+
       const newAnswer = answerRepository.create({
+        id: isUpdateQuestion?.id,
         user,
         question,
         patient,
