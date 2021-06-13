@@ -8,7 +8,7 @@ export interface IAnswer {
   user: User;
   patient: Patient;
   question: Question;
-  option: Option[];
+  selectedOptions: Option[];
   comment: string;
   createdAt: Date;
 }

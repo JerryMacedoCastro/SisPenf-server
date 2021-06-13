@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import { createConnection } from 'typeorm';
-import config from './ormconfig';
 import express from 'express';
+import cors from 'cors';
+import config from './ormconfig';
 import routes from './routes';
 
 const start = async () => {
@@ -12,12 +13,13 @@ const start = async () => {
     console.log(`Error while connecting to the database! ${error.message}`);
   }
   const app = express();
+
+  app.use(cors());
   app.use(express.json());
-  app.use(routes);
+  app.use('/sispenf/v1', routes);
 
   app.listen(3333, () => {
     console.log('Listening on port 3333');
   });
 };
-
 start();
