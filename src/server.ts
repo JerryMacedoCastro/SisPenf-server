@@ -18,7 +18,7 @@ const start = async () => {
   app.use(express.json());
   app.use('/sispenf/v1', routes);
 
-  app.listen(3333, () => {
+  app.listen(process.env.PORT || 3333, () => {
     console.log('Listening on port 3333');
   });
 };
