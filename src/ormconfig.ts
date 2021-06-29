@@ -14,6 +14,7 @@ const config: ConnectionOptions = {
   },
   subscribers: ['src/subscriber/**/*.ts'],
   synchronize: true,
+  ssl: { rejectUnauthorized: false },
 };
 
 export default config;

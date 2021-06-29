@@ -33,7 +33,7 @@ export default class HospitalBedController {
         const newBed = bedsRepository.create({
           description: `Leito ${initialValue + 1}`,
           infirmary: infirmaryId,
-          isFilled: true,
+          isFilled: false,
         });
         await bedsRepository.save(newBed);
         initialValue++;
