@@ -23,7 +23,6 @@ export default class InfirmaryController {
         hospital: hospitalId,
         isActive: true,
       });
-      console.log(newInfirmary);
       const res = await infirmaryRepository.save(newInfirmary);
 
       return response.status(201).send(res);
