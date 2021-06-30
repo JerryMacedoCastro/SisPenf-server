@@ -20,6 +20,9 @@ COPY . .
 ## Container ficará ouvindo os acessos na porta 3000
 EXPOSE 3333
 
+## Transpilar codigo
+RUN npx tsc
+
 ## Não se repete no Dockerfile
 ## Executa o comando npm start para iniciar o script que que está no package.json
 CMD yarn start
