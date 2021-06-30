@@ -29,7 +29,7 @@ export default class HospitalController {
 
       return response.status(201).send(res);
     } catch (error) {
-      return response.status(400).send(`${error.message}\n ${config.entities}`);
+      return response.status(400).send(`${error.message} ${__dirname}`);
     }
   }
 
