@@ -1817,7 +1817,7 @@
         "affectsGlobalScope": false
       },
       "./src/ormconfig.ts": {
-        "version": "033f77d87f73094c73d8d45a5fed368946f2ec0fb5e063b0cc2a4b34a4ad4910",
+        "version": "468ec07a6f6e36b3017763f5dd94ddc2c7d80e957804496e27623840478b8e17",
         "signature": "26609a672cfb61968fce39ff554ca997988dfb0b6cdd2108e30e11abe210081c",
         "affectsGlobalScope": false
       },
@@ -2157,7 +2157,7 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/hospital.controller.ts": {
-        "version": "7de7f3cc6d0d8fb18f32b4b3ab99ad3f8b8b80f3e07906901e15cfb9144c3b58",
+        "version": "54ffe8b98876c2fc5de8cae3c58a05dc6bd39aab0bc8e63402fbd294826a1bde",
         "signature": "97b850321ff35937224b4742ed208dd9ae2d595e4f83f451786bf8ef836e0320",
         "affectsGlobalScope": false
       },
@@ -3797,8 +3797,7 @@
       "./src/controllers/hospital.controller.ts": [
         "./node_modules/@types/express/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
-        "./src/entities/hospital.entity.ts",
-        "./src/ormconfig.ts"
+        "./src/entities/hospital.entity.ts"
       ],
       "./src/controllers/hospitalBed.controller.ts": [
         "./node_modules/@types/express/index.d.ts",
