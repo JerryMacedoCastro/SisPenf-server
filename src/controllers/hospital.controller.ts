@@ -1,7 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { Hospital } from '../entities/hospital.entity';
-import config from '../ormconfig';
 
 export default class HospitalController {
   public async createHospital(
@@ -29,7 +28,7 @@ export default class HospitalController {
 
       return response.status(201).send(res);
     } catch (error) {
-      return response.status(400).send(`${error.message}\n ${config.entities}`);
+      return response.status(400).send(`${error.message}`);
     }
   }
 
