@@ -1817,7 +1817,7 @@
         "affectsGlobalScope": false
       },
       "./src/ormconfig.ts": {
-        "version": "468ec07a6f6e36b3017763f5dd94ddc2c7d80e957804496e27623840478b8e17",
+        "version": "5be91d77f83089ddcda40c00637bd30af18061cd8251b66a5cf8d3b09a7507ae",
         "signature": "26609a672cfb61968fce39ff554ca997988dfb0b6cdd2108e30e11abe210081c",
         "affectsGlobalScope": false
       },
