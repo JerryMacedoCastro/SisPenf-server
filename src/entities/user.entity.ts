@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { IUser } from '../interfaces/user.interface';
 import { Answer } from './answer.entity';
 
@@ -36,4 +37,12 @@ export class User implements IUser {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  hashPassword(): void {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
+
+  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
 }
