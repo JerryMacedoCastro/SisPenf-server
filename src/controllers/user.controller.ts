@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { User } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
+
+import { User } from '../entities/user.entity';
+import jwt from 'jsonwebtoken';
 
 export default class UserController {
   public async createUser(
@@ -16,16 +18,16 @@ export default class UserController {
 
       if (isExistingUser)
         throw new Error(`The email ${isExistingUser.email} already exists!!`);
-      const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = userRepository.create({
         name,
         email,
         cpf,
         position,
-        password: hashedPassword,
+        password,
         isActive: false,
       });
+      user.hashPassword();
       const res = await userRepository.save(user);
 
       return response.status(201).send(res);
@@ -43,11 +45,15 @@ export default class UserController {
 
       const userRepository = getRepository(User);
       if (userId) {
-        const user = await userRepository.findOne(userId);
+        const user = await userRepository.findOne(userId, {
+          select: ['id', 'email', 'name', 'position'],
+        });
         if (user) return response.status(200).send(user);
         throw new Error('User not found');
       }
-      const allUsers = await userRepository.find();
+      const allUsers = await userRepository.find({
+        select: ['id', 'email', 'name', 'position'],
+      });
       return response.status(200).send(allUsers);
     } catch (error) {
       return response.status(400).send(error.message);

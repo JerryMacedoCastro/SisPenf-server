@@ -8,6 +8,8 @@ import QuestionController from '../controllers/question.controller';
 import QuestionOptionController from '../controllers/option.controller';
 import PatientController from '../controllers/patient.controller';
 import AnserController from '../controllers/answer.controller';
+import AuthController from '../controllers/auth.controller';
+import { checkJwt } from '../middlewares/checkJwt';
 
 const routes = Router();
 
@@ -20,6 +22,7 @@ const questionController = new QuestionController();
 const questionOptionController = new QuestionOptionController();
 const patientController = new PatientController();
 const answerController = new AnserController();
+const authController = new AuthController();
 
 routes.get('/', (_req, res) => {
   res.send('Hello darkness my old friend!');
@@ -28,8 +31,11 @@ routes.get('/', (_req, res) => {
 routes.post('/user', userController.createUser);
 routes.get('/user/:userId?', userController.getUsers);
 
+routes.post('/login', authController.login);
+routes.post('/change-password', [checkJwt], authController.changePassword);
+
 routes.post('/hospital', hospitalController.createHospital);
-routes.get('/hospital', hospitalController.getAllHospitals);
+routes.get('/hospital', [checkJwt], hospitalController.getAllHospitals);
 
 routes.post('/infirmary', infirmaryController.createInfirmary);
 routes.post('/infirmaries', infirmaryController.createSeveralInfirmaries);
