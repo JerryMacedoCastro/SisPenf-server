@@ -13,6 +13,8 @@ const question_controller_1 = __importDefault(require("../controllers/question.c
 const option_controller_1 = __importDefault(require("../controllers/option.controller"));
 const patient_controller_1 = __importDefault(require("../controllers/patient.controller"));
 const answer_controller_1 = __importDefault(require("../controllers/answer.controller"));
+const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const checkJwt_1 = require("../middlewares/checkJwt");
 const routes = express_1.Router();
 const userController = new user_controller_1.default();
 const hospitalController = new hospital_controller_1.default();
@@ -23,13 +25,16 @@ const questionController = new question_controller_1.default();
 const questionOptionController = new option_controller_1.default();
 const patientController = new patient_controller_1.default();
 const answerController = new answer_controller_1.default();
+const authController = new auth_controller_1.default();
 routes.get('/', (_req, res) => {
     res.send('Hello darkness my old friend!');
 });
 routes.post('/user', userController.createUser);
 routes.get('/user/:userId?', userController.getUsers);
+routes.post('/login', authController.login);
+routes.post('/change-password', [checkJwt_1.checkJwt], authController.changePassword);
 routes.post('/hospital', hospitalController.createHospital);
-routes.get('/hospital', hospitalController.getAllHospitals);
+routes.get('/hospital', [checkJwt_1.checkJwt], hospitalController.getAllHospitals);
 routes.post('/infirmary', infirmaryController.createInfirmary);
 routes.post('/infirmaries', infirmaryController.createSeveralInfirmaries);
 routes.get('/infirmary/:hospitalId?', infirmaryController.getInfirmaries);
