@@ -34,7 +34,7 @@ class AuthController {
     );
 
     // Send the jwt in the response
-    return response.send({ token: token });
+    return response.json({ name: user.name, email: user.email, token: token });
   }
 
   async changePassword(

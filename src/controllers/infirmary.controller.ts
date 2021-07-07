@@ -25,7 +25,7 @@ export default class InfirmaryController {
       });
       const res = await infirmaryRepository.save(newInfirmary);
 
-      return response.status(201).send(res);
+      return response.status(201).json(res);
     } catch (error) {
       return response.status(400).send(error.message);
     }
@@ -60,9 +60,9 @@ export default class InfirmaryController {
         initialValue++;
       }
       const res = await infirmaryRepository.find({ hospital: hospitalId });
-      return response.status(201).send(res);
+      return response.status(201).json(res);
     } catch (error) {
-      return response.status(400).send(error.message);
+      return response.status(400).json(error.message);
     }
   }
 
@@ -79,16 +79,16 @@ export default class InfirmaryController {
           where: { hospital: hospitalId },
           relations: ['hospital'],
         });
-        return response.status(200).send(infirmaries);
+        return response.status(200).json(infirmaries);
       } else {
         const infirmaries = await infirmaryRepository.find({
           relations: ['hospital'],
         });
 
-        return response.status(200).send(infirmaries);
+        return response.status(200).json(infirmaries);
       }
     } catch (error) {
-      return response.status(400).send(error.message);
+      return response.status(400).json(error.message);
     }
   }
 }
