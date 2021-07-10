@@ -24,8 +24,8 @@ export default class InfirmaryController {
         isActive: true,
       });
       const res = await infirmaryRepository.save(newInfirmary);
-
-      return response.status(201).json(res);
+      const json = JSON.stringify(res);
+      return response.status(201).json(json);
     } catch (error) {
       return response.status(400).send(error.message);
     }
@@ -84,8 +84,8 @@ export default class InfirmaryController {
         const infirmaries = await infirmaryRepository.find({
           relations: ['hospital'],
         });
-
-        return response.status(200).json(infirmaries);
+        const json = JSON.stringify(infirmaries);
+        return response.status(200).send(json);
       }
     } catch (error) {
       return response.status(400).json(error.message);

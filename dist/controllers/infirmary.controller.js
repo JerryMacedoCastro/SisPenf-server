@@ -29,7 +29,8 @@ class InfirmaryController {
                     isActive: true,
                 });
                 const res = yield infirmaryRepository.save(newInfirmary);
-                return response.status(201).send(res);
+                const json = JSON.stringify(res);
+                return response.status(201).json(json);
             }
             catch (error) {
                 return response.status(400).send(error.message);
@@ -61,10 +62,10 @@ class InfirmaryController {
                     initialValue++;
                 }
                 const res = yield infirmaryRepository.find({ hospital: hospitalId });
-                return response.status(201).send(res);
+                return response.status(201).json(res);
             }
             catch (error) {
-                return response.status(400).send(error.message);
+                return response.status(400).json(error.message);
             }
         });
     }
@@ -78,17 +79,18 @@ class InfirmaryController {
                         where: { hospital: hospitalId },
                         relations: ['hospital'],
                     });
-                    return response.status(200).send(infirmaries);
+                    return response.status(200).json(infirmaries);
                 }
                 else {
                     const infirmaries = yield infirmaryRepository.find({
                         relations: ['hospital'],
                     });
-                    return response.status(200).send(infirmaries);
+                    const json = JSON.stringify(infirmaries);
+                    return response.status(200).send(json);
                 }
             }
             catch (error) {
-                return response.status(400).send(error.message);
+                return response.status(400).json(error.message);
             }
         });
     }

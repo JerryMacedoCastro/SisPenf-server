@@ -1817,7 +1817,7 @@
         "affectsGlobalScope": false
       },
       "./src/ormconfig.ts": {
-        "version": "5be91d77f83089ddcda40c00637bd30af18061cd8251b66a5cf8d3b09a7507ae",
+        "version": "82c127d1338a5e0838980bb873c1c4a4c45c29fa99d9bf5710bc609daeba99fb",
         "signature": "26609a672cfb61968fce39ff554ca997988dfb0b6cdd2108e30e11abe210081c",
         "affectsGlobalScope": false
       },
@@ -2126,6 +2126,11 @@
         "signature": "a68969f643e0cb091046a9437b64cb1880a081fc07c70a4717b0edef2a38bc85",
         "affectsGlobalScope": false
       },
+      "./src/interfaces/hospital.interface.ts": {
+        "version": "3bccc328bd8d1ef5afed3196159b3b86481c8d49b8ccd43eac57e5be8f910003",
+        "signature": "3f791e3709802028e2f09081422d339ca6baaee32a23d11b182b77f85f1b5537",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/infirmary.interface.ts": {
         "version": "89e657f4fdbebb5fecf6681e37fecff704fab35f3539d691daecc4c4e339e9d7",
         "signature": "1cf25304084dd451fce0df57b7a1a3fe13e8c592308a538602f86f2039510970",
@@ -2144,11 +2149,6 @@
       "./src/entities/infirmary.entity.ts": {
         "version": "77a47563be754957e091cde3fef738e825ebd82f8ff3ed3eea1e5ab016bfa528",
         "signature": "3032c75ad8735656a0be5f7b377f7e46f0ec64289fb19a72bbca19e6d98609d5",
-        "affectsGlobalScope": false
-      },
-      "./src/interfaces/hospital.interface.ts": {
-        "version": "9ed6813119e4fe5ce239c31c7ef2921733196ddbf952fba4594e2b999d68167c",
-        "signature": "3f791e3709802028e2f09081422d339ca6baaee32a23d11b182b77f85f1b5537",
         "affectsGlobalScope": false
       },
       "./src/entities/hospital.entity.ts": {
@@ -2232,12 +2232,12 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/user.controller.ts": {
-        "version": "5c7de03a33ae20599d3498d053bb104ae7aa8497141cd1021738a54a484d728e",
+        "version": "d9828abbda8a9885de7f6a896cec5d6bb7cbbbb8e015cd3fd904b875add04ce8",
         "signature": "e2aa3b57cfac31e97732a6582d63d63e7f6d35b7b26f78c773b6858673b740e4",
         "affectsGlobalScope": false
       },
       "./src/controllers/infirmary.controller.ts": {
-        "version": "6ab8fb5812f2dac717d102128ac96efa7f543ae9c6c3d4faea820f32867b88ed",
+        "version": "b331f63178a0ec107df188ee53c24a8b482f7fc9847cbf4f71710dcdb13ea7bf",
         "signature": "d986bff442f6bc77dd3f115b1a9dff53f401e846960911f97d81fcd08607695c",
         "affectsGlobalScope": false
       },
@@ -2262,8 +2262,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/patient.controller.ts": {
-        "version": "3810e4154be4069a0d59297ea673c392ce0541b189d01ca69164bf78b7f3f949",
-        "signature": "356ae5ddaee194a5ae0359ebff0aa80e49b35d99c15be59b39e0cc263e1a5576",
+        "version": "c7227e40fe0a1e19d3e7d5abaa70392f668bd9f82faba58ca921b6aa99339bdf",
+        "signature": "d201314e1072370033473ab2206e0c1554f93d4a81da9bfbaf6cd894e89b94eb",
         "affectsGlobalScope": false
       },
       "./src/controllers/answer.controller.ts": {
@@ -2272,7 +2272,7 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/auth.controller.ts": {
-        "version": "9dceed87f67027e1edd4c7987e91b02bedbc1ae8e8c6c857fda5cf517f2f8653",
+        "version": "d154e67a3bc5649ec09e1be025f9e2a5f31af145c2521a2a3df71eb978c6c2ec",
         "signature": "8d0a86da60f859ac79dd07bdccd6008d541b2be5a62c38974c56e75b175b02c9",
         "affectsGlobalScope": false
       },
@@ -3923,9 +3923,6 @@
         "./src/entities/patient.entity.ts",
         "./src/entities/question.entity.ts",
         "./src/entities/user.entity.ts"
-      ],
-      "./src/interfaces/hospital.interface.ts": [
-        "./src/entities/infirmary.entity.ts"
       ],
       "./src/interfaces/hospitalBed.interface.ts": [
         "./src/entities/infirmary.entity.ts"

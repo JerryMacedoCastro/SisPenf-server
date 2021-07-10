@@ -24,22 +24,24 @@ class PatientController {
                 });
                 if (!isExistingbed)
                     throw new Error('The given hospital bed unavailable');
+                isExistingbed.isFilled = true;
+                yield bedRepository.save(isExistingbed);
                 const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
                 const newPatient = patientRepository.create({
                     name,
                     birthDate: birthdate,
                     hospitalBed: isExistingbed,
-                    isActive: true,
+                    isActive: true
                 });
-                patientRepository.save(newPatient);
-                return response.send(newPatient);
+                const patient = yield patientRepository.save(newPatient);
+                return response.send(patient);
             }
             catch (error) {
                 return response.status(400).send(error.message);
             }
         });
     }
-    GetPatient(request, response) {
+    GetPatient(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);

@@ -8,7 +8,7 @@ const config = {
     type: 'postgres',
     url: process.env.DATABASE_URL,
     entities: [
-        path_1.default.join(__dirname, '**/*.entity.ts'),
+        path_1.default.join(__dirname, 'entities/**/*.entity.ts'),
         path_1.default.join(__dirname, '**/*.entity.js'),
     ],
     migrations: ['./src/migrations/**.ts'],

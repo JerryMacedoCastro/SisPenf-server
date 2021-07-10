@@ -52,8 +52,9 @@ export default class UserController {
         throw new Error('User not found');
       }
       const allUsers = await userRepository.find({
-        select: ['id', 'email', 'name', 'position'],
+        // select: ['id', 'email', 'name', 'position'],
       });
+
       return response.status(200).send(allUsers);
     } catch (error) {
       return response.status(400).send(error.message);
