@@ -56,7 +56,7 @@ class AuthController {
             // Sing JWT, valid for 1 hour
             const token = jwt.sign({ userId: user.id, username: user.email }, jwtSecret, { expiresIn: '1h' });
             // Send the jwt in the response
-            return response.json({ name: user.name, email: user.email, token: token });
+            return response.json({ id: user.id, name: user.name, email: user.email, token: token });
         });
     }
     changePassword(request, response) {
