@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Question = void 0;
 const typeorm_1 = require("typeorm");
+const answer_entity_1 = require("./answer.entity");
 const option_entity_1 = require("./option.entity");
 const questionType_entity_1 = require("./questionType.entity");
 let Question = class Question {
@@ -33,6 +34,10 @@ __decorate([
     typeorm_1.Column({ nullable: false }),
     __metadata("design:type", Boolean)
 ], Question.prototype, "allowComment", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => answer_entity_1.Answer, answer => answer.patient),
+    __metadata("design:type", Array)
+], Question.prototype, "answers", void 0);
 __decorate([
     typeorm_1.ManyToMany(() => option_entity_1.Option, option => option.questions),
     typeorm_1.JoinTable(),

@@ -41,10 +41,7 @@ class AnserController {
                 }
                 const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
                 const isUpdateQuestion = yield answerRepository.findOne({
-                    where: {
-                        patient,
-                        question,
-                    },
+                    where: { patient, question },
                 });
                 const newAnswer = answerRepository.create({
                     id: isUpdateQuestion === null || isUpdateQuestion === void 0 ? void 0 : isUpdateQuestion.id,
@@ -59,6 +56,32 @@ class AnserController {
             }
             catch (error) {
                 return response.status(400).send(error.message);
+            }
+        });
+    }
+    GetAnswers(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                const answers = yield answerRepository.find({
+                    relations: ['patient', 'question', 'selectedOptions'],
+                });
+                return response.status(200).json(answers);
+            }
+            catch (error) {
+                return response.status(400).json(error.message);
+            }
+        });
+    }
+    DeleteAnswers(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                const answers = yield answerRepository.delete({});
+                return response.status(200).json(answers);
+            }
+            catch (error) {
+                return response.status(400).json(error.message);
             }
         });
     }

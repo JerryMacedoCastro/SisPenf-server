@@ -2187,8 +2187,8 @@
         "affectsGlobalScope": false
       },
       "./src/entities/question.entity.ts": {
-        "version": "39698ad4b4bccffcb310846f053ce3605c774d9bf9e4a0c87edd49cedc1e1d90",
-        "signature": "e1a41412a61611d3295dbfe129f5bab2889cb2f5bc4ec093466301e90e0b8eb7",
+        "version": "ee272c1a549742624fcee41d787214720844684719d32208f20c054536c62fa2",
+        "signature": "facba154c677e79b25f0f69fa4902fd9dcd8d18e6aee13372e9b4f0d058b1ae3",
         "affectsGlobalScope": false
       },
       "./src/interfaces/option.interface.ts": {
@@ -2217,7 +2217,7 @@
         "affectsGlobalScope": false
       },
       "./src/entities/answer.entity.ts": {
-        "version": "faf96f815b0c8662f9ee41284e4d2e9245b424fbe5c75647782ca60a83e9ff27",
+        "version": "54f0c19e22c80688bf6a415b1ad5a3f0440c9f02806b2c1976baf568bd4edffb",
         "signature": "75e2ad5afb665be109cab861fb0c62626dd2dce24446d1f9bffc4c234bab2f0d",
         "affectsGlobalScope": false
       },
@@ -2242,8 +2242,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/hospitalBed.controller.ts": {
-        "version": "e43fa10a950c5aa77f1ea58f723c6f53da2c025f0a70ee22a8c0f7470d676dc3",
-        "signature": "f7f3a8bafb84a4e7bf7fc20119628871f7505415d254ba627ca743dd0383650f",
+        "version": "92ad26b43211760109dabbfec887f75172f9a4f8106bf6510c467ab2108ad842",
+        "signature": "2b580dddd2368020abb5e5abd42ac5896fff5fe9b1ce07e4d970b13b6343c541",
         "affectsGlobalScope": false
       },
       "./src/controllers/questionType.controller.ts": {
@@ -2262,17 +2262,17 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/patient.controller.ts": {
-        "version": "c7227e40fe0a1e19d3e7d5abaa70392f668bd9f82faba58ca921b6aa99339bdf",
-        "signature": "d201314e1072370033473ab2206e0c1554f93d4a81da9bfbaf6cd894e89b94eb",
+        "version": "4c455af16f1db5ad6b8c2c3e2886b084e6766a4c772eee300b928ff08df3ffbe",
+        "signature": "69089d58a0262d15276e44347280f06522cbc552dd2e00987479bde8e01f3767",
         "affectsGlobalScope": false
       },
       "./src/controllers/answer.controller.ts": {
-        "version": "4559ae262dd97fc1c907cc51a1e5b31cc7acf3a51259f233aba121e31c7ac9b9",
-        "signature": "25546755e1fe88c8e70c83cd247720bf150b89dbdeda1ff75415a50d534aad2a",
+        "version": "dd0c396d05a02f47e5c075e80ca51ec3f262e7edb5c408324a9f9787ebb394ba",
+        "signature": "e6ec857904aca0996cb885c1ebb8e3857bcbde927ac0dabbcb5c58b39eb9b17a",
         "affectsGlobalScope": false
       },
       "./src/controllers/auth.controller.ts": {
-        "version": "2b3f6983e07c294ba15ac0e321306648c03dd746ce237b4eec7a475d57ca732d",
+        "version": "5e9fde991dc25c75bbb21ad6988fe94626b72489d7b22ed602a1cdc073cd2a28",
         "signature": "8d0a86da60f859ac79dd07bdccd6008d541b2be5a62c38974c56e75b175b02c9",
         "affectsGlobalScope": false
       },
@@ -2282,7 +2282,7 @@
         "affectsGlobalScope": false
       },
       "./src/routes/index.ts": {
-        "version": "4c31190490686170fd617a6e11e4ac58cf6eb6d8610cb6b705357c3c1d93941b",
+        "version": "d55d0e7929aaa28f5b2ee761ff8626024eda4120b634d688ebf159e37da3e90c",
         "signature": "1dd5314c27b80aa768efadf0e0e993bc638f57e905e1f0f7c1139892afa95482",
         "affectsGlobalScope": false
       },
@@ -3903,6 +3903,7 @@
       ],
       "./src/entities/question.entity.ts": [
         "./node_modules/typeorm/index.d.ts",
+        "./src/entities/answer.entity.ts",
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts",
         "./src/interfaces/question.interface.ts"
@@ -5503,6 +5504,7 @@
         "./src/interfaces/patient.interface.ts"
       ],
       "./src/entities/question.entity.ts": [
+        "./src/entities/answer.entity.ts",
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts",
         "./src/interfaces/question.interface.ts"

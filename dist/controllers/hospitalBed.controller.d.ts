@@ -3,4 +3,5 @@ export default class HospitalBedController {
     createSeveralHospitalBeds(request: Request, response: Response): Promise<Response>;
     createHospitalBed(request: Request, response: Response): Promise<Response>;
     getHospitalBeds(request: Request, response: Response): Promise<Response>;
+    freeHospitalBed(request: Request, response: Response): Promise<Response>;
 }
