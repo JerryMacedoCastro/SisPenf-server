@@ -37,10 +37,7 @@ export default class AnserController {
       const answerRepository = getRepository(Answer);
 
       const isUpdateQuestion = await answerRepository.findOne({
-        where: {
-          patient,
-          question,
-        },
+        where: { patient, question },
       });
 
       const newAnswer = answerRepository.create({
@@ -57,6 +54,30 @@ export default class AnserController {
       return response.status(200).send(createdAnswer);
     } catch (error) {
       return response.status(400).send(error.message);
+    }
+  }
+
+  async GetAnswers(request: Request, response: Response): Promise<Response> {
+    try {
+      const answerRepository = getRepository(Answer);
+      const answers = await answerRepository.find({
+        relations: ['patient', 'question', 'selectedOptions'],
+      });
+
+      return response.status(200).json(answers);
+    } catch (error) {
+      return response.status(400).json(error.message);
+    }
+  }
+
+  async DeleteAnswers(request: Request, response: Response): Promise<Response> {
+    try {
+      const answerRepository = getRepository(Answer);
+      const answers = await answerRepository.delete({});
+
+      return response.status(200).json(answers);
+    } catch (error) {
+      return response.status(400).json(error.message);
     }
   }
 }

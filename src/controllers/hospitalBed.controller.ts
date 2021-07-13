@@ -102,4 +102,37 @@ export default class HospitalBedController {
       return response.status(400).send(error.message);
     }
   }
+
+  async freeHospitalBed(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const { bedId } = request.params;
+      const hospitalBedRepository = getRepository(HospitalBed);
+      if (bedId) {
+        const id = Number(bedId);
+
+        const res = await hospitalBedRepository.findOne({
+          where: { id },
+        });
+
+        if (res) {
+          res.isFilled = false;
+          const updatedBed = await hospitalBedRepository.save(res);
+          return response.status(200).send(updatedBed);
+        }
+        throw new Error('Hospital bed not found');
+      }
+      const beds = await hospitalBedRepository.find();
+      beds.forEach(bed => {
+        bed.isFilled = false;
+      });
+
+      const res = await hospitalBedRepository.save(beds);
+      return response.status(200).send(res);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
 }
