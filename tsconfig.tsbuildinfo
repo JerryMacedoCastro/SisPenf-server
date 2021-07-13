@@ -2242,7 +2242,7 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/hospitalBed.controller.ts": {
-        "version": "92ad26b43211760109dabbfec887f75172f9a4f8106bf6510c467ab2108ad842",
+        "version": "89b25b6a1f69f79ea54509e5e6fa4a8daeb92fd79a18f4a1a9556f13984396c5",
         "signature": "2b580dddd2368020abb5e5abd42ac5896fff5fe9b1ce07e4d970b13b6343c541",
         "affectsGlobalScope": false
       },
@@ -3828,7 +3828,8 @@
         "./node_modules/typeorm/index.d.ts",
         "./src/entities/hospital.entity.ts",
         "./src/entities/hospitalBed.entity.ts",
-        "./src/entities/infirmary.entity.ts"
+        "./src/entities/infirmary.entity.ts",
+        "./src/entities/patient.entity.ts"
       ],
       "./src/controllers/infirmary.controller.ts": [
         "./node_modules/@types/express/index.d.ts",

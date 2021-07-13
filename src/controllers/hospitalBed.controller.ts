@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import { HospitalBed } from '../entities/hospitalBed.entity';
 import { Infirmary } from '../entities/infirmary.entity';
 import { Hospital } from '../entities/hospital.entity';
+import { Patient } from '../entities/patient.entity';
 
 export default class HospitalBedController {
   public async createSeveralHospitalBeds(
@@ -118,9 +119,22 @@ export default class HospitalBedController {
         });
 
         if (res) {
-          res.isFilled = false;
-          const updatedBed = await hospitalBedRepository.save(res);
-          return response.status(200).send(updatedBed);
+          const patientRepository = getRepository(Patient);
+          const freePatient = await patientRepository.findOne({
+            where: { hospitalBed: res.id },
+          });
+          if (freePatient) {
+            res.isFilled = false;
+            const updatedBed = await hospitalBedRepository.save(res);
+            freePatient.isActive = false;
+            const updatedPatient = await patientRepository.save(freePatient);
+
+            return response
+              .status(200)
+              .send({ bed: updatedBed, patient: updatedPatient });
+          } else {
+            return response.status(200).send({ error: 'Patient not found' });
+          }
         }
         throw new Error('Hospital bed not found');
       }
