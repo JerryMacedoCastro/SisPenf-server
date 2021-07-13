@@ -44,6 +44,7 @@ routes.get('/infirmary/:hospitalId?', infirmaryController.getInfirmaries);
 routes.get('/hospitalbed/:infirmaryId?', hospitalBedController.getHospitalBeds);
 routes.post('/hospitalbeds', hospitalBedController.createSeveralHospitalBeds);
 routes.post('/hospitalbed', hospitalBedController.createHospitalBed);
+routes.put('/hospitalbed/:bedId?', hospitalBedController.freeHospitalBed);
 
 routes.post('/questiontype', questionTypeController.CreateQuestionType);
 routes.get('/questiontype', questionTypeController.GetQuestionTypes);
@@ -56,6 +57,10 @@ routes.get('/option', questionOptionController.GetOptios);
 
 routes.post('/patient', patientController.CreatePatient);
 routes.get('/patient', patientController.GetPatient);
+routes.delete('/patient', patientController.DeletePatients);
 
+routes.get('/answer', answerController.GetAnswers);
 routes.post('/answer', answerController.CreateAnswer);
+routes.delete('/answer', answerController.DeleteAnswers);
+
 export default routes;

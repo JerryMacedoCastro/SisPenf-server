@@ -14,6 +14,9 @@ export default class PatientController {
       });
       if (!isExistingbed) throw new Error('The given hospital bed unavailable');
 
+      isExistingbed.isFilled = true;
+      await bedRepository.save(isExistingbed);
+
       const patientRepository = getRepository(Patient);
       const newPatient = patientRepository.create({
         name,
@@ -22,20 +25,34 @@ export default class PatientController {
         isActive: true,
       });
 
-      patientRepository.save(newPatient);
+      const patient = await patientRepository.save(newPatient);
 
-      return response.send(newPatient);
+      return response.send(patient);
     } catch (error) {
       return response.status(400).send(error.message);
     }
   }
 
-  async GetPatient(request: Request, response: Response): Promise<Response> {
+  async GetPatient(_request: Request, response: Response): Promise<Response> {
     try {
       const patientRepository = getRepository(Patient);
       const patients = await patientRepository.find({
         relations: ['hospitalBed', 'hospitalBed.infirmary'],
       });
+
+      return response.status(200).send(patients);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
+  async DeletePatients(
+    _request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const patientRepository = getRepository(Patient);
+      const patients = await patientRepository.delete({});
 
       return response.status(200).send(patients);
     } catch (error) {

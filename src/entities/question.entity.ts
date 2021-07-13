@@ -4,9 +4,11 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IQuestion } from '../interfaces/question.interface';
+import { Answer } from './answer.entity';
 import { Option } from './option.entity';
 import { QuestionType } from './questionType.entity';
 
@@ -25,6 +27,9 @@ export class Question implements IQuestion {
 
   @Column({ nullable: false })
   allowComment: boolean;
+
+  @OneToMany(() => Answer, answer => answer.patient)
+  answers: Answer[];
 
   @ManyToMany(() => Option, option => option.questions)
   @JoinTable()

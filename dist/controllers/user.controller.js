@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -30,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../entities/user.entity");
-const bcrypt = __importStar(require("bcrypt"));
 class UserController {
     createUser(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -40,15 +20,15 @@ class UserController {
                 const isExistingUser = yield userRepository.findOne({ email: email });
                 if (isExistingUser)
                     throw new Error(`The email ${isExistingUser.email} already exists!!`);
-                const hashedPassword = yield bcrypt.hash(password, 10);
                 const user = userRepository.create({
                     name,
                     email,
                     cpf,
                     position,
-                    password: hashedPassword,
+                    password,
                     isActive: false,
                 });
+                user.hashPassword();
                 const res = yield userRepository.save(user);
                 return response.status(201).send(res);
             }
@@ -63,12 +43,16 @@ class UserController {
                 const { userId } = request.params;
                 const userRepository = typeorm_1.getRepository(user_entity_1.User);
                 if (userId) {
-                    const user = yield userRepository.findOne(userId);
+                    const user = yield userRepository.findOne(userId, {
+                        select: ['id', 'email', 'name', 'position'],
+                    });
                     if (user)
                         return response.status(200).send(user);
                     throw new Error('User not found');
                 }
-                const allUsers = yield userRepository.find();
+                const allUsers = yield userRepository.find({
+                // select: ['id', 'email', 'name', 'position'],
+                });
                 return response.status(200).send(allUsers);
             }
             catch (error) {

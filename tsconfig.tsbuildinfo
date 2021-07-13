@@ -1817,7 +1817,7 @@
         "affectsGlobalScope": false
       },
       "./src/ormconfig.ts": {
-        "version": "5be91d77f83089ddcda40c00637bd30af18061cd8251b66a5cf8d3b09a7507ae",
+        "version": "82c127d1338a5e0838980bb873c1c4a4c45c29fa99d9bf5710bc609daeba99fb",
         "signature": "26609a672cfb61968fce39ff554ca997988dfb0b6cdd2108e30e11abe210081c",
         "affectsGlobalScope": false
       },
@@ -2126,6 +2126,11 @@
         "signature": "a68969f643e0cb091046a9437b64cb1880a081fc07c70a4717b0edef2a38bc85",
         "affectsGlobalScope": false
       },
+      "./src/interfaces/hospital.interface.ts": {
+        "version": "3bccc328bd8d1ef5afed3196159b3b86481c8d49b8ccd43eac57e5be8f910003",
+        "signature": "3f791e3709802028e2f09081422d339ca6baaee32a23d11b182b77f85f1b5537",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/infirmary.interface.ts": {
         "version": "89e657f4fdbebb5fecf6681e37fecff704fab35f3539d691daecc4c4e339e9d7",
         "signature": "1cf25304084dd451fce0df57b7a1a3fe13e8c592308a538602f86f2039510970",
@@ -2146,11 +2151,6 @@
         "signature": "3032c75ad8735656a0be5f7b377f7e46f0ec64289fb19a72bbca19e6d98609d5",
         "affectsGlobalScope": false
       },
-      "./src/interfaces/hospital.interface.ts": {
-        "version": "9ed6813119e4fe5ce239c31c7ef2921733196ddbf952fba4594e2b999d68167c",
-        "signature": "3f791e3709802028e2f09081422d339ca6baaee32a23d11b182b77f85f1b5537",
-        "affectsGlobalScope": false
-      },
       "./src/entities/hospital.entity.ts": {
         "version": "7ff9d8766da9934d175e2cf5f8bf020f5944a5ea42d3d09201da323de7785baf",
         "signature": "480fe403358814721a84739fc1d69ed178c39bd14d72266e3a4f0258f4417fc8",
@@ -2159,6 +2159,11 @@
       "./src/controllers/hospital.controller.ts": {
         "version": "54ffe8b98876c2fc5de8cae3c58a05dc6bd39aab0bc8e63402fbd294826a1bde",
         "signature": "97b850321ff35937224b4742ed208dd9ae2d595e4f83f451786bf8ef836e0320",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/bcrypt/index.d.ts": {
+        "version": "57ddc4e066366bbe04f497f9afce1c88e088dbd09be0618e072754450de3acbb",
+        "signature": "57ddc4e066366bbe04f497f9afce1c88e088dbd09be0618e072754450de3acbb",
         "affectsGlobalScope": false
       },
       "./src/interfaces/user.interface.ts": {
@@ -2182,8 +2187,8 @@
         "affectsGlobalScope": false
       },
       "./src/entities/question.entity.ts": {
-        "version": "39698ad4b4bccffcb310846f053ce3605c774d9bf9e4a0c87edd49cedc1e1d90",
-        "signature": "e1a41412a61611d3295dbfe129f5bab2889cb2f5bc4ec093466301e90e0b8eb7",
+        "version": "ee272c1a549742624fcee41d787214720844684719d32208f20c054536c62fa2",
+        "signature": "facba154c677e79b25f0f69fa4902fd9dcd8d18e6aee13372e9b4f0d058b1ae3",
         "affectsGlobalScope": false
       },
       "./src/interfaces/option.interface.ts": {
@@ -2212,33 +2217,33 @@
         "affectsGlobalScope": false
       },
       "./src/entities/answer.entity.ts": {
-        "version": "faf96f815b0c8662f9ee41284e4d2e9245b424fbe5c75647782ca60a83e9ff27",
+        "version": "54f0c19e22c80688bf6a415b1ad5a3f0440c9f02806b2c1976baf568bd4edffb",
         "signature": "75e2ad5afb665be109cab861fb0c62626dd2dce24446d1f9bffc4c234bab2f0d",
         "affectsGlobalScope": false
       },
       "./src/entities/user.entity.ts": {
-        "version": "05ad1c8d53352cbd494a3ee4c0352e77ddc66bf1abfbdff9c3e4649fc0cebc26",
-        "signature": "906b5c0b14863aebff459cdc789a838c98ca952dd131ff1424b187a528fc244a",
+        "version": "d83d8cf3b93b6df821acaa20eedf933a6cb28cf8ed5e4439cd960fc50100069d",
+        "signature": "00c8cd85fe1f9f893a7b0e6de83daa3c94bccbefdff2e2eff194850bea35d1bf",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/bcrypt/index.d.ts": {
-        "version": "57ddc4e066366bbe04f497f9afce1c88e088dbd09be0618e072754450de3acbb",
-        "signature": "57ddc4e066366bbe04f497f9afce1c88e088dbd09be0618e072754450de3acbb",
+      "./node_modules/@types/jsonwebtoken/index.d.ts": {
+        "version": "82e7f072b82bff83fd5aefd1bbbcbfefc857d53b5c51a42f6785445c0227e188",
+        "signature": "82e7f072b82bff83fd5aefd1bbbcbfefc857d53b5c51a42f6785445c0227e188",
         "affectsGlobalScope": false
       },
       "./src/controllers/user.controller.ts": {
-        "version": "83537622291452ba5311af4dca563a513da25c7a75fcb2d45077e005153bff2d",
+        "version": "d9828abbda8a9885de7f6a896cec5d6bb7cbbbb8e015cd3fd904b875add04ce8",
         "signature": "e2aa3b57cfac31e97732a6582d63d63e7f6d35b7b26f78c773b6858673b740e4",
         "affectsGlobalScope": false
       },
       "./src/controllers/infirmary.controller.ts": {
-        "version": "6ab8fb5812f2dac717d102128ac96efa7f543ae9c6c3d4faea820f32867b88ed",
+        "version": "b331f63178a0ec107df188ee53c24a8b482f7fc9847cbf4f71710dcdb13ea7bf",
         "signature": "d986bff442f6bc77dd3f115b1a9dff53f401e846960911f97d81fcd08607695c",
         "affectsGlobalScope": false
       },
       "./src/controllers/hospitalBed.controller.ts": {
-        "version": "e43fa10a950c5aa77f1ea58f723c6f53da2c025f0a70ee22a8c0f7470d676dc3",
-        "signature": "f7f3a8bafb84a4e7bf7fc20119628871f7505415d254ba627ca743dd0383650f",
+        "version": "92ad26b43211760109dabbfec887f75172f9a4f8106bf6510c467ab2108ad842",
+        "signature": "2b580dddd2368020abb5e5abd42ac5896fff5fe9b1ce07e4d970b13b6343c541",
         "affectsGlobalScope": false
       },
       "./src/controllers/questionType.controller.ts": {
@@ -2257,17 +2262,27 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/patient.controller.ts": {
-        "version": "3810e4154be4069a0d59297ea673c392ce0541b189d01ca69164bf78b7f3f949",
-        "signature": "356ae5ddaee194a5ae0359ebff0aa80e49b35d99c15be59b39e0cc263e1a5576",
+        "version": "4c455af16f1db5ad6b8c2c3e2886b084e6766a4c772eee300b928ff08df3ffbe",
+        "signature": "69089d58a0262d15276e44347280f06522cbc552dd2e00987479bde8e01f3767",
         "affectsGlobalScope": false
       },
       "./src/controllers/answer.controller.ts": {
-        "version": "4559ae262dd97fc1c907cc51a1e5b31cc7acf3a51259f233aba121e31c7ac9b9",
-        "signature": "25546755e1fe88c8e70c83cd247720bf150b89dbdeda1ff75415a50d534aad2a",
+        "version": "dd0c396d05a02f47e5c075e80ca51ec3f262e7edb5c408324a9f9787ebb394ba",
+        "signature": "e6ec857904aca0996cb885c1ebb8e3857bcbde927ac0dabbcb5c58b39eb9b17a",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/auth.controller.ts": {
+        "version": "5e9fde991dc25c75bbb21ad6988fe94626b72489d7b22ed602a1cdc073cd2a28",
+        "signature": "8d0a86da60f859ac79dd07bdccd6008d541b2be5a62c38974c56e75b175b02c9",
+        "affectsGlobalScope": false
+      },
+      "./src/middlewares/checkJwt.ts": {
+        "version": "ad0e280f6a860850c2108114a0c173e68a4f53f1cadae5b501e7b96e8cf3f82c",
+        "signature": "b0d63f7ca8cd441266c2aa262fa9e479a58d8204546384cac050dfea07f3bf61",
         "affectsGlobalScope": false
       },
       "./src/routes/index.ts": {
-        "version": "394626c36c8cb145c525059408a2d8257a19ffedafbc239aa89b3e359a6b5afe",
+        "version": "d55d0e7929aaa28f5b2ee761ff8626024eda4120b634d688ebf159e37da3e90c",
         "signature": "1dd5314c27b80aa768efadf0e0e993bc638f57e905e1f0f7c1139892afa95482",
         "affectsGlobalScope": false
       },
@@ -2346,6 +2361,9 @@
         "./node_modules/@types/qs/index.d.ts",
         "./node_modules/@types/serve-static/index.d.ts"
       ],
+      "./node_modules/@types/jsonwebtoken/index.d.ts": [
+        "./node_modules/@types/node/index.d.ts"
+      ],
       "./node_modules/@types/node/assert/strict.d.ts": [
         "./node_modules/@types/node/assert.d.ts"
       ],
@@ -3792,6 +3810,12 @@
         "./src/entities/option.entity.ts",
         "./src/entities/patient.entity.ts",
         "./src/entities/question.entity.ts",
+        "./src/entities/user.entity.ts"
+      ],
+      "./src/controllers/auth.controller.ts": [
+        "./node_modules/@types/express/index.d.ts",
+        "./node_modules/@types/jsonwebtoken/index.d.ts",
+        "./node_modules/typeorm/index.d.ts",
         "./src/entities/user.entity.ts"
       ],
       "./src/controllers/hospital.controller.ts": [
@@ -3838,6 +3862,7 @@
       "./src/controllers/user.controller.ts": [
         "./node_modules/@types/bcrypt/index.d.ts",
         "./node_modules/@types/express/index.d.ts",
+        "./node_modules/@types/jsonwebtoken/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
         "./src/entities/user.entity.ts"
       ],
@@ -3878,6 +3903,7 @@
       ],
       "./src/entities/question.entity.ts": [
         "./node_modules/typeorm/index.d.ts",
+        "./src/entities/answer.entity.ts",
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts",
         "./src/interfaces/question.interface.ts"
@@ -3888,6 +3914,7 @@
         "./src/interfaces/questionType.interface.ts"
       ],
       "./src/entities/user.entity.ts": [
+        "./node_modules/@types/bcrypt/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
         "./src/entities/answer.entity.ts",
         "./src/interfaces/user.interface.ts"
@@ -3897,9 +3924,6 @@
         "./src/entities/patient.entity.ts",
         "./src/entities/question.entity.ts",
         "./src/entities/user.entity.ts"
-      ],
-      "./src/interfaces/hospital.interface.ts": [
-        "./src/entities/infirmary.entity.ts"
       ],
       "./src/interfaces/hospitalBed.interface.ts": [
         "./src/entities/infirmary.entity.ts"
@@ -3917,6 +3941,11 @@
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts"
       ],
+      "./src/middlewares/checkJwt.ts": [
+        "./node_modules/@types/express/index.d.ts",
+        "./node_modules/@types/jsonwebtoken/index.d.ts",
+        "./src/entities/user.entity.ts"
+      ],
       "./src/ormconfig.ts": [
         "./node_modules/@types/node/path.d.ts",
         "./node_modules/typeorm/index.d.ts"
@@ -3924,6 +3953,7 @@
       "./src/routes/index.ts": [
         "./node_modules/@types/express/index.d.ts",
         "./src/controllers/answer.controller.ts",
+        "./src/controllers/auth.controller.ts",
         "./src/controllers/hospital.controller.ts",
         "./src/controllers/hospitalBed.controller.ts",
         "./src/controllers/infirmary.controller.ts",
@@ -3931,7 +3961,8 @@
         "./src/controllers/patient.controller.ts",
         "./src/controllers/question.controller.ts",
         "./src/controllers/questionType.controller.ts",
-        "./src/controllers/user.controller.ts"
+        "./src/controllers/user.controller.ts",
+        "./src/middlewares/checkJwt.ts"
       ],
       "./src/server.ts": [
         "./node_modules/@types/cors/index.d.ts",
@@ -3970,6 +4001,9 @@
         "./node_modules/@types/express-serve-static-core/index.d.ts",
         "./node_modules/@types/qs/index.d.ts",
         "./node_modules/@types/serve-static/index.d.ts"
+      ],
+      "./node_modules/@types/jsonwebtoken/index.d.ts": [
+        "./node_modules/@types/node/index.d.ts"
       ],
       "./node_modules/@types/node/assert/strict.d.ts": [
         "./node_modules/@types/node/assert.d.ts"
@@ -5413,6 +5447,9 @@
       "./src/controllers/answer.controller.ts": [
         "./node_modules/@types/express/index.d.ts"
       ],
+      "./src/controllers/auth.controller.ts": [
+        "./node_modules/@types/express/index.d.ts"
+      ],
       "./src/controllers/hospital.controller.ts": [
         "./node_modules/@types/express/index.d.ts"
       ],
@@ -5467,6 +5504,7 @@
         "./src/interfaces/patient.interface.ts"
       ],
       "./src/entities/question.entity.ts": [
+        "./src/entities/answer.entity.ts",
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts",
         "./src/interfaces/question.interface.ts"
@@ -5501,6 +5539,9 @@
         "./src/entities/option.entity.ts",
         "./src/entities/questionType.entity.ts"
       ],
+      "./src/middlewares/checkJwt.ts": [
+        "./node_modules/@types/express/index.d.ts"
+      ],
       "./src/ormconfig.ts": [
         "./node_modules/typeorm/index.d.ts"
       ],
@@ -5520,6 +5561,7 @@
       "./node_modules/@types/express/index.d.ts",
       "./node_modules/@types/json-schema/index.d.ts",
       "./node_modules/@types/json5/index.d.ts",
+      "./node_modules/@types/jsonwebtoken/index.d.ts",
       "./node_modules/@types/mime/index.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/assert/strict.d.ts",
@@ -5943,6 +5985,7 @@
       "./node_modules/typescript/lib/lib.scripthost.d.ts",
       "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
       "./src/controllers/answer.controller.ts",
+      "./src/controllers/auth.controller.ts",
       "./src/controllers/hospital.controller.ts",
       "./src/controllers/hospitalBed.controller.ts",
       "./src/controllers/infirmary.controller.ts",
@@ -5969,6 +6012,7 @@
       "./src/interfaces/question.interface.ts",
       "./src/interfaces/questionType.interface.ts",
       "./src/interfaces/user.interface.ts",
+      "./src/middlewares/checkJwt.ts",
       "./src/ormconfig.ts",
       "./src/routes/index.ts",
       "./src/server.ts"

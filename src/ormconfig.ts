@@ -5,7 +5,7 @@ const config: ConnectionOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
   entities: [
-    path.join(__dirname, '**/*.entity.ts'),
+    path.join(__dirname, 'entities/**/*.entity.ts'),
     path.join(__dirname, '**/*.entity.js'),
   ],
   migrations: ['./src/migrations/**.ts'],

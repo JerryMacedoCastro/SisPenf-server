@@ -10,4 +10,6 @@ export declare class User implements IUser {
     answers: Answer[];
     isActive: boolean;
     createdAt: Date;
+    hashPassword(): void;
+    checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean;
 }

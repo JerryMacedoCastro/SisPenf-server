@@ -31,7 +31,7 @@ export class Answer implements IAnswer {
   })
   patient: Patient;
 
-  @OneToOne(() => Question, {
+  @ManyToOne(() => Question, question => question.answers, {
     nullable: false,
   })
   @JoinColumn()

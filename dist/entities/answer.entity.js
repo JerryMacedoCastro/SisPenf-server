@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", patient_entity_1.Patient)
 ], Answer.prototype, "patient", void 0);
 __decorate([
-    typeorm_1.OneToOne(() => question_entity_1.Question, {
+    typeorm_1.ManyToOne(() => question_entity_1.Question, question => question.answers, {
         nullable: false,
     }),
     typeorm_1.JoinColumn(),

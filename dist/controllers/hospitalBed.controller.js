@@ -99,5 +99,34 @@ class HospitalBedController {
             }
         });
     }
+    freeHospitalBed(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { bedId } = request.params;
+                const hospitalBedRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                if (bedId) {
+                    const id = Number(bedId);
+                    const res = yield hospitalBedRepository.findOne({
+                        where: { id },
+                    });
+                    if (res) {
+                        res.isFilled = false;
+                        const updatedBed = yield hospitalBedRepository.save(res);
+                        return response.status(200).send(updatedBed);
+                    }
+                    throw new Error('Hospital bed not found');
+                }
+                const beds = yield hospitalBedRepository.find();
+                beds.forEach(bed => {
+                    bed.isFilled = false;
+                });
+                const res = yield hospitalBedRepository.save(beds);
+                return response.status(200).send(res);
+            }
+            catch (error) {
+                return response.status(400).send(error.message);
+            }
+        });
+    }
 }
 exports.default = HospitalBedController;
