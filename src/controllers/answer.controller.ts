@@ -57,7 +57,7 @@ export default class AnserController {
     }
   }
 
-  async GetAnswers(request: Request, response: Response): Promise<Response> {
+  async GetAnswers(_request: Request, response: Response): Promise<Response> {
     try {
       const answerRepository = getRepository(Answer);
       const answers = await answerRepository.find({
@@ -70,7 +70,10 @@ export default class AnserController {
     }
   }
 
-  async DeleteAnswers(request: Request, response: Response): Promise<Response> {
+  async DeleteAnswers(
+    _request: Request,
+    response: Response,
+  ): Promise<Response> {
     try {
       const answerRepository = getRepository(Answer);
       const answers = await answerRepository.delete({});

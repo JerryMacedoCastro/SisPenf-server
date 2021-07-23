@@ -2252,8 +2252,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/question.controller.ts": {
-        "version": "9e77fb39f6eb80fa7ba0493d4307dbef78efa0b55eb0faa20973e016eb49a0f3",
-        "signature": "15b1e950a99e04479b6facb4cd9477595e8f9fdee879fb1836b76f2b241201a8",
+        "version": "303d8a65e39600765faf01ca9842033c17c8b317060e931f7ef4db56a2f31553",
+        "signature": "0a7034ef5b3ebd1b588f366e99728222a2c1c6b5c6dc3f6c8548d52977635dae",
         "affectsGlobalScope": false
       },
       "./src/controllers/option.controller.ts": {
@@ -2267,8 +2267,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/answer.controller.ts": {
-        "version": "dd0c396d05a02f47e5c075e80ca51ec3f262e7edb5c408324a9f9787ebb394ba",
-        "signature": "e6ec857904aca0996cb885c1ebb8e3857bcbde927ac0dabbcb5c58b39eb9b17a",
+        "version": "6268e28662190f57dc49c586f709e2498f79c6414e9c91915aec372e256bd168",
+        "signature": "7241e5ad478654ac851082742caf1ea20293ce21b6b373aa1a89823291f7a844",
         "affectsGlobalScope": false
       },
       "./src/controllers/auth.controller.ts": {
@@ -2282,7 +2282,7 @@
         "affectsGlobalScope": false
       },
       "./src/routes/index.ts": {
-        "version": "d55d0e7929aaa28f5b2ee761ff8626024eda4120b634d688ebf159e37da3e90c",
+        "version": "d4689015ea99c31ec7f026ce9238db0252bba07f21d3daa44b74829aec3ec4db",
         "signature": "1dd5314c27b80aa768efadf0e0e993bc638f57e905e1f0f7c1139892afa95482",
         "affectsGlobalScope": false
       },
@@ -3851,6 +3851,7 @@
       "./src/controllers/question.controller.ts": [
         "./node_modules/@types/express/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
+        "./src/entities/answer.entity.ts",
         "./src/entities/option.entity.ts",
         "./src/entities/question.entity.ts",
         "./src/entities/questionType.entity.ts"

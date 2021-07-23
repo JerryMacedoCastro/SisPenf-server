@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { Question } from '../entities/question.entity';
 import { QuestionType } from '../entities/questionType.entity';
 import { Option } from '../entities/option.entity';
+import { Answer } from '../entities/answer.entity';
 
 export default class QuestionController {
   async CreateQuestion(
@@ -31,20 +32,20 @@ export default class QuestionController {
           newOptions = [...newOptions, createdOption];
         }
       }
-
+      const questionRepository = getRepository(Question);
+      const isExistingDescription = await questionRepository.findOne({
+        description: description,
+      });
+      // if (isExistingDescription) {
+      //   throw new Error('The given question already exist!');
+      // }
       const typeRepository = getRepository(QuestionType);
       const isExistingType = typeRepository.findOne(type);
       if (!isExistingType)
         throw new Error('The given question type does not exist!');
 
-      const questionRepository = getRepository(Question);
-      const isExistingDescription = await questionRepository.findOne({
-        description: description,
-      });
-      if (isExistingDescription)
-        throw new Error('The given question already exist!');
-
       const newQuestion = questionRepository.create({
+        id: isExistingDescription?.id,
         description,
         type,
         allowComment,
@@ -58,14 +59,55 @@ export default class QuestionController {
     }
   }
 
-  async GetQuestions(_request: Request, response: Response): Promise<Response> {
+  async GetQuestions(request: Request, response: Response): Promise<Response> {
     try {
+      const { questionType } = request.params;
+      const type = Number(questionType);
       const questionRepository = getRepository(Question);
-      const res = await questionRepository.find({
-        relations: ['type', 'options'],
-      });
+      let res;
+      if (type) {
+        res = await questionRepository.find({
+          where: { type: type },
+          relations: ['type', 'options'],
+        });
+      } else {
+        res = await questionRepository.find({
+          relations: ['type', 'options'],
+        });
+      }
 
       return response.status(200).send(res);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
+  async DeleteQuestionById(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const { questionId } = request.params;
+      const id = Number(questionId);
+      const questionRepository = getRepository(Question);
+
+      if (id) {
+        const res = await questionRepository.findOne({ where: { id } });
+
+        if (res) {
+          const answerRepository = getRepository(Answer);
+          const asnswers = await answerRepository.find({
+            where: { question: res },
+          });
+          if (asnswers) {
+            await answerRepository.delete({ question: res });
+            await questionRepository.delete({ id: res.id });
+          }
+        }
+        return response.status(200).send(res);
+      } else {
+        throw new Error('Question not found');
+      }
     } catch (error) {
       return response.status(400).send(error.message);
     }
