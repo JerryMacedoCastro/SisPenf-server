@@ -82,6 +82,27 @@ export default class QuestionController {
     }
   }
 
+  async GetQuestionById(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const { id } = request.params;
+      const questionId = Number(id);
+      const questionRepository = getRepository(Question);
+      let res;
+      if (questionId) {
+        res = await questionRepository.find({
+          where: { id: questionId },
+          relations: ['type', 'options'],
+        });
+      }
+      return response.status(200).send(res);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
   async DeleteQuestionById(
     request: Request,
     response: Response,
