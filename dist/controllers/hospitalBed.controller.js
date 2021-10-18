@@ -13,6 +13,7 @@ const typeorm_1 = require("typeorm");
 const hospitalBed_entity_1 = require("../entities/hospitalBed.entity");
 const infirmary_entity_1 = require("../entities/infirmary.entity");
 const hospital_entity_1 = require("../entities/hospital.entity");
+const patient_entity_1 = require("../entities/patient.entity");
 class HospitalBedController {
     createSeveralHospitalBeds(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -110,9 +111,22 @@ class HospitalBedController {
                         where: { id },
                     });
                     if (res) {
-                        res.isFilled = false;
-                        const updatedBed = yield hospitalBedRepository.save(res);
-                        return response.status(200).send(updatedBed);
+                        const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
+                        const freePatient = yield patientRepository.findOne({
+                            where: { hospitalBed: res.id },
+                        });
+                        if (freePatient) {
+                            res.isFilled = false;
+                            const updatedBed = yield hospitalBedRepository.save(res);
+                            freePatient.isActive = false;
+                            const updatedPatient = yield patientRepository.save(freePatient);
+                            return response
+                                .status(200)
+                                .send({ bed: updatedBed, patient: updatedPatient });
+                        }
+                        else {
+                            return response.status(200).send({ error: 'Patient not found' });
+                        }
                     }
                     throw new Error('Hospital bed not found');
                 }

@@ -57,7 +57,61 @@ export default class AnserController {
     }
   }
 
-  async GetAnswers(request: Request, response: Response): Promise<Response> {
+  async CreateAnswers(request: Request, response: Response): Promise<Response> {
+    try {
+      const { userId, patientId, questions } = request.body;
+
+      const answeredQuestions: { question: string; option: number }[] =
+        questions;
+
+      if (!questions || answeredQuestions.length === 0)
+        throw new Error('No answers were given!!');
+
+      const user = await getRepository(User).findOne(userId);
+      if (!user) throw new Error('The given user does not exists!!');
+
+      const patient = await getRepository(Patient).findOne(patientId);
+      if (!patient) throw new Error('The given patient does not exists!!');
+
+      let createdAnswers: Answer[] = [];
+      answeredQuestions.forEach(async answer => {
+        const question = await getRepository(Question).findOne({
+          where: { description: answer.question },
+          relations: ['options'],
+        });
+
+        if (!question) throw new Error('The given question does not exists!!');
+        const answerRepository = getRepository(Answer);
+        const isUpdateQuestion = await answerRepository.findOne({
+          where: { patient, question },
+        });
+
+        const optionRepository = getRepository(Option);
+        const selectedOption = await optionRepository.findOne(answer.option);
+
+        if (!selectedOption) throw new Error('Invalid option');
+        const selectedOptions: Option[] = [selectedOption];
+        const newAnswer = answerRepository.create({
+          id: isUpdateQuestion?.id,
+          user,
+          comment: '',
+          question,
+          patient,
+          selectedOptions,
+        });
+        const createdAnswer = await answerRepository.save(newAnswer);
+        createdAnswers = [...createdAnswers, createdAnswer];
+      });
+      console.log(createdAnswers);
+      return response
+        .status(200)
+        .send({ Message: 'All answers created or updated!' });
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
+  async GetAnswers(_request: Request, response: Response): Promise<Response> {
     try {
       const answerRepository = getRepository(Answer);
       const answers = await answerRepository.find({
@@ -70,7 +124,10 @@ export default class AnserController {
     }
   }
 
-  async DeleteAnswers(request: Request, response: Response): Promise<Response> {
+  async DeleteAnswers(
+    _request: Request,
+    response: Response,
+  ): Promise<Response> {
     try {
       const answerRepository = getRepository(Answer);
       const answers = await answerRepository.delete({});

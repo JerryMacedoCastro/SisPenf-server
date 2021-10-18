@@ -59,7 +59,7 @@ class AnserController {
             }
         });
     }
-    GetAnswers(request, response) {
+    GetAnswers(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
@@ -73,7 +73,7 @@ class AnserController {
             }
         });
     }
-    DeleteAnswers(request, response) {
+    DeleteAnswers(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);

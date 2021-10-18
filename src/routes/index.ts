@@ -50,7 +50,9 @@ routes.post('/questiontype', questionTypeController.CreateQuestionType);
 routes.get('/questiontype', questionTypeController.GetQuestionTypes);
 
 routes.post('/question', questionController.CreateQuestion);
-routes.get('/question', questionController.GetQuestions);
+routes.get('/question/:questionType?', questionController.GetQuestions);
+routes.get('/questionById/:id', questionController.GetQuestionById);
+routes.delete('/question/:questionId', questionController.DeleteQuestionById);
 
 routes.post('/option', questionOptionController.CreateOption);
 routes.get('/option', questionOptionController.GetOptios);
@@ -61,6 +63,7 @@ routes.delete('/patient', patientController.DeletePatients);
 
 routes.get('/answer', answerController.GetAnswers);
 routes.post('/answer', answerController.CreateAnswer);
+routes.post('/answers', answerController.CreateAnswers);
 routes.delete('/answer', answerController.DeleteAnswers);
 
 export default routes;
