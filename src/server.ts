@@ -22,4 +22,5 @@ const start = async () => {
     console.log('Listening on port 3333');
   });
 };
+
 start();
