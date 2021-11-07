@@ -88,6 +88,26 @@ class QuestionController {
             }
         });
     }
+    GetQuestionById(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = request.params;
+                const questionId = Number(id);
+                const questionRepository = typeorm_1.getRepository(question_entity_1.Question);
+                let res;
+                if (questionId) {
+                    res = yield questionRepository.find({
+                        where: { id: questionId },
+                        relations: ['type', 'options'],
+                    });
+                }
+                return response.status(200).send(res);
+            }
+            catch (error) {
+                return response.status(400).send(error.message);
+            }
+        });
+    }
     DeleteQuestionById(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
