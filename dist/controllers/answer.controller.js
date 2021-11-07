@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const answer_entity_1 = require("../entities/answer.entity");
+const option_entity_1 = require("../entities/option.entity");
 const patient_entity_1 = require("../entities/patient.entity");
 const question_entity_1 = require("../entities/question.entity");
 const user_entity_1 = require("../entities/user.entity");
@@ -53,6 +54,57 @@ class AnserController {
                 });
                 const createdAnswer = yield answerRepository.save(newAnswer);
                 return response.status(200).send(createdAnswer);
+            }
+            catch (error) {
+                return response.status(400).send(error.message);
+            }
+        });
+    }
+    CreateAnswers(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId, patientId, questions } = request.body;
+                const answeredQuestions = questions;
+                if (!questions || answeredQuestions.length === 0)
+                    throw new Error('No answers were given!!');
+                const user = yield typeorm_1.getRepository(user_entity_1.User).findOne(userId);
+                if (!user)
+                    throw new Error('The given user does not exists!!');
+                const patient = yield typeorm_1.getRepository(patient_entity_1.Patient).findOne(patientId);
+                if (!patient)
+                    throw new Error('The given patient does not exists!!');
+                let createdAnswers = [];
+                answeredQuestions.forEach((answer) => __awaiter(this, void 0, void 0, function* () {
+                    const question = yield typeorm_1.getRepository(question_entity_1.Question).findOne({
+                        where: { description: answer.question },
+                        relations: ['options'],
+                    });
+                    if (!question)
+                        throw new Error('The given question does not exists!!');
+                    const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                    const isUpdateQuestion = yield answerRepository.findOne({
+                        where: { patient, question },
+                    });
+                    const optionRepository = typeorm_1.getRepository(option_entity_1.Option);
+                    const selectedOption = yield optionRepository.findOne(answer.option);
+                    if (!selectedOption)
+                        throw new Error('Invalid option');
+                    const selectedOptions = [selectedOption];
+                    const newAnswer = answerRepository.create({
+                        id: isUpdateQuestion === null || isUpdateQuestion === void 0 ? void 0 : isUpdateQuestion.id,
+                        user,
+                        comment: '',
+                        question,
+                        patient,
+                        selectedOptions,
+                    });
+                    const createdAnswer = yield answerRepository.save(newAnswer);
+                    createdAnswers = [...createdAnswers, createdAnswer];
+                }));
+                console.log(createdAnswers);
+                return response
+                    .status(200)
+                    .send({ Message: 'All answers created or updated!' });
             }
             catch (error) {
                 return response.status(400).send(error.message);
