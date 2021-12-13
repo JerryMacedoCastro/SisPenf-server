@@ -15,22 +15,22 @@ const question_entity_1 = require("./question.entity");
 let QuestionType = class QuestionType {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], QuestionType.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], QuestionType.prototype, "label", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], QuestionType.prototype, "isActive", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => question_entity_1.Question, question => question.type),
+    (0, typeorm_1.OneToMany)(() => question_entity_1.Question, question => question.type),
     __metadata("design:type", Array)
 ], QuestionType.prototype, "questions", void 0);
 QuestionType = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], QuestionType);
 exports.QuestionType = QuestionType;

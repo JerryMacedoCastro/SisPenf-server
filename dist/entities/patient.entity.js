@@ -16,35 +16,35 @@ const hospitalBed_entity_1 = require("./hospitalBed.entity");
 let Patient = class Patient {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Patient.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Patient.prototype, "name", void 0);
 __decorate([
-    typeorm_1.OneToOne(() => hospitalBed_entity_1.HospitalBed),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.OneToOne)(() => hospitalBed_entity_1.HospitalBed),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", hospitalBed_entity_1.HospitalBed)
 ], Patient.prototype, "hospitalBed", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => answer_entity_1.Answer, answer => answer.patient),
+    (0, typeorm_1.OneToMany)(() => answer_entity_1.Answer, answer => answer.patient),
     __metadata("design:type", Array)
 ], Patient.prototype, "answers", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Date)
 ], Patient.prototype, "birthDate", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false, default: 'now()' }),
+    (0, typeorm_1.Column)({ nullable: false, default: 'now()' }),
     __metadata("design:type", Date)
 ], Patient.prototype, "admissionDate", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false, default: true }),
+    (0, typeorm_1.Column)({ nullable: false, default: true }),
     __metadata("design:type", Boolean)
 ], Patient.prototype, "isActive", void 0);
 Patient = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], Patient);
 exports.Patient = Patient;

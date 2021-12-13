@@ -16,7 +16,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, name, cpf, position, password } = request.body;
             try {
-                const userRepository = typeorm_1.getRepository(user_entity_1.User);
+                const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
                 const isExistingUser = yield userRepository.findOne({ email: email });
                 if (isExistingUser)
                     throw new Error(`The email ${isExistingUser.email} already exists!!`);
@@ -41,7 +41,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId } = request.params;
-                const userRepository = typeorm_1.getRepository(user_entity_1.User);
+                const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
                 if (userId) {
                     const user = yield userRepository.findOne(userId, {
                         select: ['id', 'email', 'name', 'position'],

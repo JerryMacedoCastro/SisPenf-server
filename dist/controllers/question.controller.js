@@ -19,7 +19,7 @@ class QuestionController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { description, type, allowComment, options } = request.body;
-                const optionRepository = typeorm_1.getRepository(option_entity_1.Option);
+                const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
                 const optionsArray = options;
                 let newOptions = [];
                 for (let index = 0; index < optionsArray.length; index++) {
@@ -37,14 +37,14 @@ class QuestionController {
                         newOptions = [...newOptions, createdOption];
                     }
                 }
-                const questionRepository = typeorm_1.getRepository(question_entity_1.Question);
+                const questionRepository = (0, typeorm_1.getRepository)(question_entity_1.Question);
                 const isExistingDescription = yield questionRepository.findOne({
                     description: description,
                 });
                 // if (isExistingDescription) {
                 //   throw new Error('The given question already exist!');
                 // }
-                const typeRepository = typeorm_1.getRepository(questionType_entity_1.QuestionType);
+                const typeRepository = (0, typeorm_1.getRepository)(questionType_entity_1.QuestionType);
                 const isExistingType = typeRepository.findOne(type);
                 if (!isExistingType)
                     throw new Error('The given question type does not exist!');
@@ -68,7 +68,7 @@ class QuestionController {
             try {
                 const { questionType } = request.params;
                 const type = Number(questionType);
-                const questionRepository = typeorm_1.getRepository(question_entity_1.Question);
+                const questionRepository = (0, typeorm_1.getRepository)(question_entity_1.Question);
                 let res;
                 if (type) {
                     res = yield questionRepository.find({
@@ -93,7 +93,7 @@ class QuestionController {
             try {
                 const { id } = request.params;
                 const questionId = Number(id);
-                const questionRepository = typeorm_1.getRepository(question_entity_1.Question);
+                const questionRepository = (0, typeorm_1.getRepository)(question_entity_1.Question);
                 let res;
                 if (questionId) {
                     res = yield questionRepository.find({
@@ -113,11 +113,11 @@ class QuestionController {
             try {
                 const { questionId } = request.params;
                 const id = Number(questionId);
-                const questionRepository = typeorm_1.getRepository(question_entity_1.Question);
+                const questionRepository = (0, typeorm_1.getRepository)(question_entity_1.Question);
                 if (id) {
                     const res = yield questionRepository.findOne({ where: { id } });
                     if (res) {
-                        const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                        const answerRepository = (0, typeorm_1.getRepository)(answer_entity_1.Answer);
                         const asnswers = yield answerRepository.find({
                             where: { question: res },
                         });

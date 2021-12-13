@@ -21,13 +21,13 @@ const ormconfig_1 = __importDefault(require("./ormconfig"));
 const routes_1 = __importDefault(require("./routes"));
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield typeorm_1.createConnection(ormconfig_1.default);
+        yield (0, typeorm_1.createConnection)(ormconfig_1.default);
     }
     catch (error) {
         console.log(`Error while connecting to the database! ${error.message}`);
     }
-    const app = express_1.default();
-    app.use(cors_1.default());
+    const app = (0, express_1.default)();
+    app.use((0, cors_1.default)());
     app.use(express_1.default.json());
     app.use('/sispenf/v1', routes_1.default);
     app.listen(process.env.PORT || 3333, () => {

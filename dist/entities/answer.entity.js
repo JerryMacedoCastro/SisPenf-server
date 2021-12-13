@@ -18,42 +18,42 @@ const user_entity_1 = require("./user.entity");
 let Answer = class Answer {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Answer.prototype, "id", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => user_entity_1.User, user => user.answers, {
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.answers, {
         nullable: false,
     }),
     __metadata("design:type", user_entity_1.User)
 ], Answer.prototype, "user", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => patient_entity_1.Patient, patient => patient.answers, {
+    (0, typeorm_1.ManyToOne)(() => patient_entity_1.Patient, patient => patient.answers, {
         nullable: false,
     }),
     __metadata("design:type", patient_entity_1.Patient)
 ], Answer.prototype, "patient", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => question_entity_1.Question, question => question.answers, {
+    (0, typeorm_1.ManyToOne)(() => question_entity_1.Question, question => question.answers, {
         nullable: false,
     }),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", question_entity_1.Question)
 ], Answer.prototype, "question", void 0);
 __decorate([
-    typeorm_1.ManyToMany(() => option_entity_1.Option),
-    typeorm_1.JoinTable(),
+    (0, typeorm_1.ManyToMany)(() => option_entity_1.Option),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Answer.prototype, "selectedOptions", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Answer.prototype, "comment", void 0);
 __decorate([
-    typeorm_1.CreateDateColumn(),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Answer.prototype, "createdAt", void 0);
 Answer = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], Answer);
 exports.Answer = Answer;

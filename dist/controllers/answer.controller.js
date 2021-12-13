@@ -21,13 +21,13 @@ class AnserController {
             try {
                 const { userId, patientId, questionId, options, comment } = request.body;
                 const answers = options;
-                const user = yield typeorm_1.getRepository(user_entity_1.User).findOne(userId);
+                const user = yield (0, typeorm_1.getRepository)(user_entity_1.User).findOne(userId);
                 if (!user)
                     throw new Error('The given user does not exists!!');
-                const patient = yield typeorm_1.getRepository(patient_entity_1.Patient).findOne(patientId);
+                const patient = yield (0, typeorm_1.getRepository)(patient_entity_1.Patient).findOne(patientId);
                 if (!patient)
                     throw new Error('The given patient does not exists!!');
-                const question = yield typeorm_1.getRepository(question_entity_1.Question).findOne({
+                const question = yield (0, typeorm_1.getRepository)(question_entity_1.Question).findOne({
                     where: { id: questionId },
                     relations: ['options'],
                 });
@@ -40,7 +40,7 @@ class AnserController {
                         throw new Error('Invalid answer');
                     selectedOptions = [...selectedOptions, isValidAnswer];
                 }
-                const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                const answerRepository = (0, typeorm_1.getRepository)(answer_entity_1.Answer);
                 const isUpdateQuestion = yield answerRepository.findOne({
                     where: { patient, question },
                 });
@@ -67,33 +67,36 @@ class AnserController {
                 const answeredQuestions = questions;
                 if (!questions || answeredQuestions.length === 0)
                     throw new Error('No answers were given!!');
-                const user = yield typeorm_1.getRepository(user_entity_1.User).findOne(userId);
+                const user = yield (0, typeorm_1.getRepository)(user_entity_1.User).findOne(userId);
                 if (!user)
                     throw new Error('The given user does not exists!!');
-                const patient = yield typeorm_1.getRepository(patient_entity_1.Patient).findOne(patientId);
+                const patient = yield (0, typeorm_1.getRepository)(patient_entity_1.Patient).findOne(patientId);
                 if (!patient)
                     throw new Error('The given patient does not exists!!');
                 let createdAnswers = [];
                 answeredQuestions.forEach((answer) => __awaiter(this, void 0, void 0, function* () {
-                    const question = yield typeorm_1.getRepository(question_entity_1.Question).findOne({
+                    const question = yield (0, typeorm_1.getRepository)(question_entity_1.Question).findOne({
                         where: { description: answer.question },
                         relations: ['options'],
                     });
                     if (!question)
                         throw new Error('The given question does not exists!!');
-                    const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                    const answerRepository = (0, typeorm_1.getRepository)(answer_entity_1.Answer);
                     const isUpdateQuestion = yield answerRepository.findOne({
                         where: { patient, question },
                     });
-                    const optionRepository = typeorm_1.getRepository(option_entity_1.Option);
-                    const selectedOption = yield optionRepository.findOne(answer.option);
-                    if (!selectedOption)
-                        throw new Error('Invalid option');
-                    const selectedOptions = [selectedOption];
+                    let selectedOptions = [];
+                    if (question.options.length > 0) {
+                        const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
+                        const selectedOption = yield optionRepository.findOne(answer.option);
+                        if (!selectedOption)
+                            throw new Error('Invalid option');
+                        selectedOptions = [selectedOption];
+                    }
                     const newAnswer = answerRepository.create({
                         id: isUpdateQuestion === null || isUpdateQuestion === void 0 ? void 0 : isUpdateQuestion.id,
                         user,
-                        comment: '',
+                        comment: answer.comment || '',
                         question,
                         patient,
                         selectedOptions,
@@ -114,7 +117,7 @@ class AnserController {
     GetAnswers(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                const answerRepository = (0, typeorm_1.getRepository)(answer_entity_1.Answer);
                 const answers = yield answerRepository.find({
                     relations: ['patient', 'question', 'selectedOptions'],
                 });
@@ -128,7 +131,7 @@ class AnserController {
     DeleteAnswers(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const answerRepository = typeorm_1.getRepository(answer_entity_1.Answer);
+                const answerRepository = (0, typeorm_1.getRepository)(answer_entity_1.Answer);
                 const answers = yield answerRepository.delete({});
                 return response.status(200).json(answers);
             }

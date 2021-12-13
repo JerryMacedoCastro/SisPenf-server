@@ -17,12 +17,12 @@ class InfirmaryController {
         return __awaiter(this, void 0, void 0, function* () {
             const { description, hospitalId } = request.body;
             try {
-                const hospitalRepository = typeorm_1.getRepository(hospital_entity_1.Hospital);
+                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
                 const isExistingHospital = yield hospitalRepository.findOne(hospitalId);
                 if (!isExistingHospital) {
                     throw new Error(`The given hospital does not exist!`);
                 }
-                const infirmaryRepository = typeorm_1.getRepository(infirmary_entity_1.Infirmary);
+                const infirmaryRepository = (0, typeorm_1.getRepository)(infirmary_entity_1.Infirmary);
                 const newInfirmary = infirmaryRepository.create({
                     description,
                     hospital: hospitalId,
@@ -42,12 +42,12 @@ class InfirmaryController {
             const { numberOfInfirmaries, hospitalId } = request.body;
             try {
                 const quantity = Number(numberOfInfirmaries);
-                const hospitalRepository = typeorm_1.getRepository(hospital_entity_1.Hospital);
+                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
                 const isExistingHospital = yield hospitalRepository.findOne(hospitalId);
                 if (!isExistingHospital) {
                     throw new Error(`The given hospital does not exist!`);
                 }
-                const infirmaryRepository = typeorm_1.getRepository(infirmary_entity_1.Infirmary);
+                const infirmaryRepository = (0, typeorm_1.getRepository)(infirmary_entity_1.Infirmary);
                 const currentInfirmaries = yield infirmaryRepository.find({
                     hospital: hospitalId,
                 });
@@ -73,7 +73,7 @@ class InfirmaryController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { hospitalId } = request.params;
-                const infirmaryRepository = typeorm_1.getRepository(infirmary_entity_1.Infirmary);
+                const infirmaryRepository = (0, typeorm_1.getRepository)(infirmary_entity_1.Infirmary);
                 if (hospitalId) {
                     const infirmaries = yield infirmaryRepository.find({
                         where: { hospital: hospitalId },

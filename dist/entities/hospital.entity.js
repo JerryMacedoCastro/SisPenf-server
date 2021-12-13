@@ -15,26 +15,26 @@ const infirmary_entity_1 = require("./infirmary.entity");
 let Hospital = class Hospital {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Hospital.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Hospital.prototype, "name", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => infirmary_entity_1.Infirmary, infirmary => infirmary.hospital),
+    (0, typeorm_1.OneToMany)(() => infirmary_entity_1.Infirmary, infirmary => infirmary.hospital),
     __metadata("design:type", Array)
 ], Hospital.prototype, "infirmaries", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Hospital.prototype, "isActive", void 0);
 __decorate([
-    typeorm_1.CreateDateColumn(),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Hospital.prototype, "createdAt", void 0);
 Hospital = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], Hospital);
 exports.Hospital = Hospital;

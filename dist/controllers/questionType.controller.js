@@ -16,7 +16,7 @@ class QuestionTypeControleer {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { label } = request.body;
-                const questionTypeRepository = typeorm_1.getRepository(questionType_entity_1.QuestionType);
+                const questionTypeRepository = (0, typeorm_1.getRepository)(questionType_entity_1.QuestionType);
                 const newQuestionType = questionTypeRepository.create({
                     label,
                     isActive: true,
@@ -32,7 +32,7 @@ class QuestionTypeControleer {
     GetQuestionTypes(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const questionTypeRepository = typeorm_1.getRepository(questionType_entity_1.QuestionType);
+                const questionTypeRepository = (0, typeorm_1.getRepository)(questionType_entity_1.QuestionType);
                 const res = yield questionTypeRepository.find();
                 return response.status(200).send(res);
             }
