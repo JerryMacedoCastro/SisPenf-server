@@ -18,7 +18,7 @@ class PatientController {
             try {
                 const { name, birthdate, bed } = request.body;
                 const bedId = Number(bed);
-                const bedRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                const bedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 const isExistingbed = yield bedRepository.findOne({
                     where: { id: bedId, isFilled: false },
                 });
@@ -26,7 +26,7 @@ class PatientController {
                     throw new Error('The given hospital bed unavailable');
                 isExistingbed.isFilled = true;
                 yield bedRepository.save(isExistingbed);
-                const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
+                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
                 const newPatient = patientRepository.create({
                     name,
                     birthDate: birthdate,
@@ -44,7 +44,7 @@ class PatientController {
     GetPatient(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
+                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
                 const patients = yield patientRepository.find({
                     relations: ['hospitalBed', 'hospitalBed.infirmary'],
                 });
@@ -58,7 +58,7 @@ class PatientController {
     DeletePatients(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
+                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
                 const patients = yield patientRepository.delete({});
                 return response.status(200).send(patients);
             }

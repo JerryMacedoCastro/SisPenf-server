@@ -16,7 +16,7 @@ class HospitalController {
         return __awaiter(this, void 0, void 0, function* () {
             const { name } = request.body;
             try {
-                const hospitalRepository = typeorm_1.getRepository(hospital_entity_1.Hospital);
+                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
                 const isExistingHospital = yield hospitalRepository.findOne({
                     name: name,
                 });
@@ -37,7 +37,7 @@ class HospitalController {
     getAllHospitals(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const hospitalRepository = typeorm_1.getRepository(hospital_entity_1.Hospital);
+                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
                 const hospitals = yield hospitalRepository.find();
                 return response.status(200).send(hospitals);
             }

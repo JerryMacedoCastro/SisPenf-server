@@ -15,18 +15,18 @@ const question_entity_1 = require("./question.entity");
 let Option = class Option {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Option.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Option.prototype, "description", void 0);
 __decorate([
-    typeorm_1.ManyToMany(() => question_entity_1.Question, question => question.options),
+    (0, typeorm_1.ManyToMany)(() => question_entity_1.Question, question => question.options),
     __metadata("design:type", Array)
 ], Option.prototype, "questions", void 0);
 Option = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], Option);
 exports.Option = Option;

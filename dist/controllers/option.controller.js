@@ -16,7 +16,7 @@ class QuestionOptionController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { description } = request.body;
-                const optionRepository = typeorm_1.getRepository(option_entity_1.Option);
+                const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
                 const isExistingOption = yield optionRepository.findOne({
                     description: description,
                 });
@@ -34,7 +34,7 @@ class QuestionOptionController {
     GetOptios(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const optionRepository = typeorm_1.getRepository(option_entity_1.Option);
+                const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
                 const options = yield optionRepository.find();
                 return response.status(200).send(options);
             }

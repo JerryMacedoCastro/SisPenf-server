@@ -61,8 +61,11 @@ export default class AnserController {
     try {
       const { userId, patientId, questions } = request.body;
 
-      const answeredQuestions: { question: string; option: number }[] =
-        questions;
+      const answeredQuestions: {
+        question: string;
+        option?: number;
+        comment?: string;
+      }[] = questions;
 
       if (!questions || answeredQuestions.length === 0)
         throw new Error('No answers were given!!');
@@ -86,19 +89,22 @@ export default class AnserController {
           where: { patient, question },
         });
 
-        const optionRepository = getRepository(Option);
-        const selectedOption = await optionRepository.findOne(answer.option);
-
-        if (!selectedOption) throw new Error('Invalid option');
-        const selectedOptions: Option[] = [selectedOption];
+        let selectedOptions: Option[] = [];
+        if (question.options.length > 0) {
+          const optionRepository = getRepository(Option);
+          const selectedOption = await optionRepository.findOne(answer.option);
+          if (!selectedOption) throw new Error('Invalid option');
+          selectedOptions = [selectedOption];
+        }
         const newAnswer = answerRepository.create({
           id: isUpdateQuestion?.id,
           user,
-          comment: '',
+          comment: answer.comment || '',
           question,
           patient,
           selectedOptions,
         });
+
         const createdAnswer = await answerRepository.save(newAnswer);
         createdAnswers = [...createdAnswers, createdAnswer];
       });

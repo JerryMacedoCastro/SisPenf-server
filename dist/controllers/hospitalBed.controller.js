@@ -22,15 +22,15 @@ class HospitalBedController {
                 const quantity = Number(numberOfBeds);
                 if (quantity <= 0)
                     throw new Error('Invalid umber of beds');
-                const hospitalRepository = typeorm_1.getRepository(hospital_entity_1.Hospital);
+                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
                 const isExistingHospital = yield hospitalRepository.findOne(hospitalId);
                 if (!isExistingHospital)
                     throw new Error(`The given hospital does not exist!`);
-                const infirmaryRepository = typeorm_1.getRepository(infirmary_entity_1.Infirmary);
+                const infirmaryRepository = (0, typeorm_1.getRepository)(infirmary_entity_1.Infirmary);
                 const isExistingInfirmary = yield infirmaryRepository.findOne(infirmaryId);
                 if (!isExistingInfirmary)
                     throw new Error(`The given infirmary does not exist!`);
-                const bedsRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                const bedsRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 const currentBeds = yield bedsRepository.find({ infirmary: infirmaryId });
                 let initialValue = currentBeds.length;
                 for (let index = 0; index < quantity; index++) {
@@ -57,12 +57,12 @@ class HospitalBedController {
         return __awaiter(this, void 0, void 0, function* () {
             const { description, infirmaryId } = request.body;
             try {
-                const infirmaryRepository = typeorm_1.getRepository(infirmary_entity_1.Infirmary);
+                const infirmaryRepository = (0, typeorm_1.getRepository)(infirmary_entity_1.Infirmary);
                 const isExistingInfirmary = yield infirmaryRepository.findOne(infirmaryId);
                 if (!isExistingInfirmary) {
                     throw new Error(`The given infirmary does not exist!`);
                 }
-                const bedRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                const bedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 const newBed = bedRepository.create({
                     description,
                     infirmary: infirmaryId,
@@ -80,7 +80,7 @@ class HospitalBedController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { infirmaryId } = request.params;
-                const hospitalBedRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                const hospitalBedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 if (infirmaryId) {
                     const res = yield hospitalBedRepository.find({
                         where: { infirmary: infirmaryId },
@@ -104,14 +104,14 @@ class HospitalBedController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { bedId } = request.params;
-                const hospitalBedRepository = typeorm_1.getRepository(hospitalBed_entity_1.HospitalBed);
+                const hospitalBedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 if (bedId) {
                     const id = Number(bedId);
                     const res = yield hospitalBedRepository.findOne({
                         where: { id },
                     });
                     if (res) {
-                        const patientRepository = typeorm_1.getRepository(patient_entity_1.Patient);
+                        const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
                         const freePatient = yield patientRepository.findOne({
                             where: { hospitalBed: res.id },
                         });

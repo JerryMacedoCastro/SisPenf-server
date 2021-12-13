@@ -17,33 +17,33 @@ const questionType_entity_1 = require("./questionType.entity");
 let Question = class Question {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Question.prototype, "id", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => questionType_entity_1.QuestionType, type => type.questions, {
+    (0, typeorm_1.ManyToOne)(() => questionType_entity_1.QuestionType, type => type.questions, {
         nullable: false,
     }),
     __metadata("design:type", questionType_entity_1.QuestionType)
 ], Question.prototype, "type", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Question.prototype, "description", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Boolean)
 ], Question.prototype, "allowComment", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => answer_entity_1.Answer, answer => answer.patient),
+    (0, typeorm_1.OneToMany)(() => answer_entity_1.Answer, answer => answer.patient),
     __metadata("design:type", Array)
 ], Question.prototype, "answers", void 0);
 __decorate([
-    typeorm_1.ManyToMany(() => option_entity_1.Option, option => option.questions),
-    typeorm_1.JoinTable(),
+    (0, typeorm_1.ManyToMany)(() => option_entity_1.Option, option => option.questions),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Question.prototype, "options", void 0);
 Question = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], Question);
 exports.Question = Question;

@@ -40,7 +40,7 @@ class AuthController {
                 response.status(400).send();
             }
             // Get user from database
-            const userRepository = typeorm_1.getRepository(user_entity_1.User);
+            const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
             let user;
             try {
                 user = yield userRepository.findOneOrFail({ where: { email } });
@@ -74,7 +74,7 @@ class AuthController {
                 return response.status(400).send({ error: 'No parameters' });
             }
             // Get user from the database
-            const userRepository = typeorm_1.getRepository(user_entity_1.User);
+            const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
             let user;
             try {
                 user = yield userRepository.findOneOrFail(id);

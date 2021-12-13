@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkJwt = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
-exports.checkJwt = (req, res, next) => {
+const checkJwt = (req, res, next) => {
     // Get the jwt token from the head
     const token = req.headers.auth;
     let jwtPayload;
@@ -46,3 +46,4 @@ exports.checkJwt = (req, res, next) => {
     // Call the next middleware or controller
     next();
 };
+exports.checkJwt = checkJwt;

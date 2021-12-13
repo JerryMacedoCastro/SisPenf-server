@@ -15,24 +15,24 @@ const infirmary_entity_1 = require("./infirmary.entity");
 let HospitalBed = class HospitalBed {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], HospitalBed.prototype, "id", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => infirmary_entity_1.Infirmary, infirmary => infirmary.hospitalBeds, {
+    (0, typeorm_1.ManyToOne)(() => infirmary_entity_1.Infirmary, infirmary => infirmary.hospitalBeds, {
         nullable: false,
     }),
     __metadata("design:type", infirmary_entity_1.Infirmary)
 ], HospitalBed.prototype, "infirmary", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], HospitalBed.prototype, "description", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Boolean)
 ], HospitalBed.prototype, "isFilled", void 0);
 HospitalBed = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], HospitalBed);
 exports.HospitalBed = HospitalBed;
