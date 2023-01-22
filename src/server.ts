@@ -17,6 +17,7 @@ const start = async () => {
       throw new Error('You need configure env vars');
     }
     await createConnection(config);
+    console.log('Database conected');
   } catch (error) {
     console.log(`Error while connecting to the database! ${error.message}`);
   }
@@ -26,14 +27,8 @@ const start = async () => {
   app.use(express.json());
   app.use('/sispenf/v1', routes);
 
-  app.listen(process.env.PORT || 3333, () => {
-    console.log(
-      process.env.DATABASE_HOST,
-      process.env.DATABASE_USERNAME,
-      process.env.DATABASE_PASSWORD,
-      process.env.DATABASE_NAME,
-    );
-    console.log('Listening on port 3333');
+  app.listen(process.env.PORT, () => {
+    console.log('Listening on port', process.env.PORT);
   });
 };
 
