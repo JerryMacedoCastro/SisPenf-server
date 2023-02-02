@@ -21,7 +21,11 @@ const ormconfig_1 = __importDefault(require("./ormconfig"));
 const routes_1 = __importDefault(require("./routes"));
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        if (!process.env.DATABASE_URL) {
+            throw new Error('You need configure env vars');
+        }
         yield (0, typeorm_1.createConnection)(ormconfig_1.default);
+        console.log('Database conected');
     }
     catch (error) {
         console.log(`Error while connecting to the database! ${error.message}`);
@@ -30,8 +34,8 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
     app.use('/sispenf/v1', routes_1.default);
-    app.listen(process.env.PORT || 3333, () => {
-        console.log('Listening on port 3333');
+    app.listen(process.env.PORT, () => {
+        console.log('Listening on port', process.env.PORT);
     });
 });
 start();
