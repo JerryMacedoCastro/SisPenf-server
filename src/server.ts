@@ -8,12 +8,7 @@ import routes from './routes';
 
 const start = async () => {
   try {
-    if (
-      !process.env.DATABASE_HOST ||
-      !process.env.DATABASE_USERNAME ||
-      !process.env.DATABASE_PASSWORD ||
-      !process.env.DATABASE_NAME
-    ) {
+    if (!process.env.DATABASE_URL) {
       throw new Error('You need configure env vars');
     }
     await createConnection(config);
