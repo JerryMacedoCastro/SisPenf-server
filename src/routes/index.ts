@@ -55,7 +55,8 @@ routes.get('/questionById/:id', questionController.GetQuestionById);
 routes.delete('/question/:questionId', questionController.DeleteQuestionById);
 
 routes.post('/option', questionOptionController.CreateOption);
-routes.get('/option', questionOptionController.GetOptios);
+routes.get('/option', questionOptionController.GetOptions);
+routes.delete('/option', questionOptionController.DeleteOptions);
 
 routes.post('/patient', patientController.CreatePatient);
 routes.get('/patient', patientController.GetPatient);
