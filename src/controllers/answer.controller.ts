@@ -63,14 +63,16 @@ export default class AnserController {
 
       const answeredQuestions: {
         question: string;
-        option?: number;
         comment?: string;
+        option?: string;
       }[] = questions;
 
-      if (!questions || answeredQuestions.length === 0)
+      if (!questions.length || answeredQuestions.length === 0)
         throw new Error('No answers were given!!');
 
-      const user = await getRepository(User).findOne(userId);
+      const userRepo = getRepository(User);
+      const user = await userRepo.findOne(userId);
+
       if (!user) throw new Error('The given user does not exists!!');
 
       const patient = await getRepository(Patient).findOne(patientId);
@@ -82,7 +84,6 @@ export default class AnserController {
           where: { description: answer.question },
           relations: ['options'],
         });
-
         if (!question) throw new Error('The given question does not exists!!');
         const answerRepository = getRepository(Answer);
         const isUpdateQuestion = await answerRepository.findOne({
@@ -91,8 +92,11 @@ export default class AnserController {
 
         let selectedOptions: Option[] = [];
         if (question.options.length > 0) {
+          console.log(answer.option);
           const optionRepository = getRepository(Option);
-          const selectedOption = await optionRepository.findOne(answer.option);
+          const selectedOption = await optionRepository.findOne({
+            where: { description: answer.option },
+          });
           if (!selectedOption) throw new Error('Invalid option');
           selectedOptions = [selectedOption];
         }
@@ -108,7 +112,6 @@ export default class AnserController {
         const createdAnswer = await answerRepository.save(newAnswer);
         createdAnswers = [...createdAnswers, createdAnswer];
       });
-      console.log(createdAnswers);
       return response
         .status(200)
         .send({ Message: 'All answers created or updated!' });
