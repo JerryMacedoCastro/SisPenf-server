@@ -6,7 +6,7 @@ import { HospitalBed } from '../entities/hospitalBed.entity';
 export default class PatientController {
   async CreatePatient(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, birthdate, bed } = request.body;
+      const { name, birthdate, admissionDate, bed } = request.body;
       const bedId = Number(bed);
       const bedRepository = getRepository(HospitalBed);
       const isExistingbed = await bedRepository.findOne({
@@ -22,6 +22,7 @@ export default class PatientController {
         name,
         birthDate: birthdate,
         hospitalBed: isExistingbed,
+        admissionDate: admissionDate,
         isActive: true,
       });
 
