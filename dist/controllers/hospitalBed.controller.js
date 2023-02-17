@@ -115,20 +115,20 @@ class HospitalBedController {
                         const freePatient = yield patientRepository.findOne({
                             where: { hospitalBed: res.id },
                         });
+                        res.isFilled = false;
+                        const updatedBed = yield hospitalBedRepository.save(res);
                         if (freePatient) {
-                            res.isFilled = false;
-                            const updatedBed = yield hospitalBedRepository.save(res);
                             freePatient.isActive = false;
                             const updatedPatient = yield patientRepository.save(freePatient);
                             return response
                                 .status(200)
                                 .send({ bed: updatedBed, patient: updatedPatient });
                         }
-                        else {
-                            return response.status(200).send({ error: 'Patient not found' });
-                        }
+                        return response.status(200).send({ bed: updatedBed });
                     }
-                    throw new Error('Hospital bed not found');
+                    else {
+                        throw new Error('Hospital bed not found');
+                    }
                 }
                 const beds = yield hospitalBedRepository.find();
                 beds.forEach(bed => {

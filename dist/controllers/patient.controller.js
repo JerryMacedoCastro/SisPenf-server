@@ -16,7 +16,7 @@ class PatientController {
     CreatePatient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { name, birthdate, bed } = request.body;
+                const { name, birthdate, admissionDate, bed } = request.body;
                 const bedId = Number(bed);
                 const bedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
                 const isExistingbed = yield bedRepository.findOne({
@@ -31,6 +31,7 @@ class PatientController {
                     name,
                     birthDate: birthdate,
                     hospitalBed: isExistingbed,
+                    admissionDate: admissionDate,
                     isActive: true,
                 });
                 const patient = yield patientRepository.save(newPatient);

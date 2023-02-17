@@ -65,9 +65,10 @@ class AnserController {
             try {
                 const { userId, patientId, questions } = request.body;
                 const answeredQuestions = questions;
-                if (!questions || answeredQuestions.length === 0)
+                if (!questions.length || answeredQuestions.length === 0)
                     throw new Error('No answers were given!!');
-                const user = yield (0, typeorm_1.getRepository)(user_entity_1.User).findOne(userId);
+                const userRepo = (0, typeorm_1.getRepository)(user_entity_1.User);
+                const user = yield userRepo.findOne(userId);
                 if (!user)
                     throw new Error('The given user does not exists!!');
                 const patient = yield (0, typeorm_1.getRepository)(patient_entity_1.Patient).findOne(patientId);
@@ -87,8 +88,11 @@ class AnserController {
                     });
                     let selectedOptions = [];
                     if (question.options.length > 0) {
+                        console.log(answer.option);
                         const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
-                        const selectedOption = yield optionRepository.findOne(answer.option);
+                        const selectedOption = yield optionRepository.findOne({
+                            where: { description: answer.option },
+                        });
                         if (!selectedOption)
                             throw new Error('Invalid option');
                         selectedOptions = [selectedOption];
@@ -104,7 +108,6 @@ class AnserController {
                     const createdAnswer = yield answerRepository.save(newAnswer);
                     createdAnswers = [...createdAnswers, createdAnswer];
                 }));
-                console.log(createdAnswers);
                 return response
                     .status(200)
                     .send({ Message: 'All answers created or updated!' });
