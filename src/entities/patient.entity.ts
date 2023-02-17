@@ -29,7 +29,7 @@ export class Patient implements IPatient {
   @Column({ nullable: false })
   birthDate: Date;
 
-  @Column({ nullable: false, default: 'now()' })
+  @Column({ nullable: false })
   admissionDate: Date;
 
   @Column({ nullable: false, default: true })

@@ -113,7 +113,6 @@ export default class HospitalBedController {
       const hospitalBedRepository = getRepository(HospitalBed);
       if (bedId) {
         const id = Number(bedId);
-
         const res = await hospitalBedRepository.findOne({
           where: { id },
         });
@@ -123,20 +122,20 @@ export default class HospitalBedController {
           const freePatient = await patientRepository.findOne({
             where: { hospitalBed: res.id },
           });
+          res.isFilled = false;
+          const updatedBed = await hospitalBedRepository.save(res);
           if (freePatient) {
-            res.isFilled = false;
-            const updatedBed = await hospitalBedRepository.save(res);
             freePatient.isActive = false;
             const updatedPatient = await patientRepository.save(freePatient);
 
             return response
               .status(200)
               .send({ bed: updatedBed, patient: updatedPatient });
-          } else {
-            return response.status(200).send({ error: 'Patient not found' });
           }
+          return response.status(200).send({ bed: updatedBed });
+        } else {
+          throw new Error('Hospital bed not found');
         }
-        throw new Error('Hospital bed not found');
       }
       const beds = await hospitalBedRepository.find();
       beds.forEach(bed => {

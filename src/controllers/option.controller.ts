@@ -22,10 +22,24 @@ export default class QuestionOptionController {
     }
   }
 
-  async GetOptios(_request: Request, response: Response): Promise<Response> {
+  async GetOptions(_request: Request, response: Response): Promise<Response> {
     try {
       const optionRepository = getRepository(Option);
       const options = await optionRepository.find();
+
+      return response.status(200).send(options);
+    } catch (error) {
+      return response.status(400).send(error.message);
+    }
+  }
+
+  async DeleteOptions(
+    _request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const optionRepository = getRepository(Option);
+      const options = await optionRepository.delete({});
 
       return response.status(200).send(options);
     } catch (error) {

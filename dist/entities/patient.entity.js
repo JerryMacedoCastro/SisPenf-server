@@ -37,7 +37,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Patient.prototype, "birthDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false, default: 'now()' }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", Date)
 ], Patient.prototype, "admissionDate", void 0);
 __decorate([

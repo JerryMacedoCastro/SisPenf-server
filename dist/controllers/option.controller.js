@@ -31,11 +31,23 @@ class QuestionOptionController {
             }
         });
     }
-    GetOptios(_request, response) {
+    GetOptions(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
                 const options = yield optionRepository.find();
+                return response.status(200).send(options);
+            }
+            catch (error) {
+                return response.status(400).send(error.message);
+            }
+        });
+    }
+    DeleteOptions(_request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const optionRepository = (0, typeorm_1.getRepository)(option_entity_1.Option);
+                const options = yield optionRepository.delete({});
                 return response.status(200).send(options);
             }
             catch (error) {
