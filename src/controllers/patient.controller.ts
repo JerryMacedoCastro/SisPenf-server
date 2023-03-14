@@ -1,14 +1,14 @@
-import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { Patient } from '../entities/patient.entity';
 import { HospitalBed } from '../entities/hospitalBed.entity';
+import AppDataSource from '../ormconfig';
 
 export default class PatientController {
   async CreatePatient(request: Request, response: Response): Promise<Response> {
     try {
       const { name, birthdate, admissionDate, bed } = request.body;
       const bedId = Number(bed);
-      const bedRepository = getRepository(HospitalBed);
+      const bedRepository = AppDataSource.getRepository(HospitalBed);
       const isExistingbed = await bedRepository.findOne({
         where: { id: bedId, isFilled: false },
       });
@@ -17,7 +17,7 @@ export default class PatientController {
       isExistingbed.isFilled = true;
       await bedRepository.save(isExistingbed);
 
-      const patientRepository = getRepository(Patient);
+      const patientRepository = AppDataSource.getRepository(Patient);
       const newPatient = patientRepository.create({
         name,
         birthDate: birthdate,
@@ -34,9 +34,19 @@ export default class PatientController {
     }
   }
 
-  async GetPatient(_request: Request, response: Response): Promise<Response> {
+  async GetPatient(request: Request, response: Response): Promise<Response> {
     try {
-      const patientRepository = getRepository(Patient);
+      const { patientId } = request.params;
+      const patientRepository = AppDataSource.getRepository(Patient);
+      if (patientId) {
+        const id = Number(patientId);
+        const patient = await patientRepository.find({
+          where: { id },
+          relations: ['hospitalBed', 'hospitalBed.infirmary'],
+        });
+        return response.status(200).send(patient);
+      }
+
       const patients = await patientRepository.find({
         relations: ['hospitalBed', 'hospitalBed.infirmary'],
       });
@@ -52,7 +62,7 @@ export default class PatientController {
     response: Response,
   ): Promise<Response> {
     try {
-      const patientRepository = getRepository(Patient);
+      const patientRepository = AppDataSource.getRepository(Patient);
       const patients = await patientRepository.delete({});
 
       return response.status(200).send(patients);

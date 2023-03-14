@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import AppDataSource from '../ormconfig';
 
 import { User } from '../entities/user.entity';
 import jwt from 'jsonwebtoken';
@@ -13,8 +13,10 @@ export default class UserController {
     const { email, name, cpf, position, password } = request.body;
 
     try {
-      const userRepository = getRepository(User);
-      const isExistingUser = await userRepository.findOne({ email: email });
+      const userRepository = AppDataSource.getRepository(User);
+      const isExistingUser = await userRepository.findOne({
+        where: { email: email },
+      });
 
       if (isExistingUser)
         throw new Error(`The email ${isExistingUser.email} already exists!!`);
@@ -43,16 +45,17 @@ export default class UserController {
     try {
       const { userId } = request.params;
 
-      const userRepository = getRepository(User);
+      const userRepository = AppDataSource.getRepository(User);
       if (userId) {
-        const user = await userRepository.findOne(userId, {
+        const user = await userRepository.findOne({
+          where: { id: Number(userId) },
           select: ['id', 'email', 'name', 'position'],
         });
         if (user) return response.status(200).send(user);
         throw new Error('User not found');
       }
       const allUsers = await userRepository.find({
-        // select: ['id', 'email', 'name', 'position'],
+        select: ['id', 'email', 'name', 'position'],
       });
 
       return response.status(200).send(allUsers);
