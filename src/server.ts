@@ -11,7 +11,11 @@ const start = async () => {
       throw new Error('You need configure env vars');
     }
     await AppDataSource.initialize();
-    console.log('Database conected');
+    if (AppDataSource.isInitialized) {
+      console.log('Database conected...');
+    } else {
+      throw new Error('AppDataSource.isInitialized returned false');
+    }
   } catch (error) {
     console.log(`Error while connecting to the database! ${error.message}`);
   }

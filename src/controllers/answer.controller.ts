@@ -30,7 +30,7 @@ export default class AnserController {
       let selectedOptions: Option[] = [];
       for (let index = 0; index < answers.length; index++) {
         const isValidAnswer = question.options.find(
-          op => op.id === answers[index].option,
+          (op: { id: number }) => op.id === answers[index].option,
         );
         if (!isValidAnswer) throw new Error('Invalid answer');
         selectedOptions = [...selectedOptions, isValidAnswer];
