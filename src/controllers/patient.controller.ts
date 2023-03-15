@@ -34,12 +34,22 @@ export default class PatientController {
     }
   }
 
-  async GetPatient(_request: Request, response: Response): Promise<Response> {
+  async GetPatient(request: Request, response: Response): Promise<Response> {
     try {
+      const { patientId } = request.params;
       const patientRepository = getRepository(Patient);
-      const patients = await patientRepository.find({
+      const options = {
         relations: ['hospitalBed', 'hospitalBed.infirmary'],
-      });
+      };
+
+      const filteredOptions = {
+        where: { id: Number(patientId) },
+        relations: ['hospitalBed', 'hospitalBed.infirmary'],
+      };
+
+      const patients = await patientRepository.find(
+        patientId ? filteredOptions : options,
+      );
 
       return response.status(200).send(patients);
     } catch (error) {
