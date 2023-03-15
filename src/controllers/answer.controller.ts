@@ -133,7 +133,7 @@ export default class AnserController {
         const id = Number(patientId);
         const type = Number(questionType);
         const answers = await answerRepository.find({
-          where: { id, question: { type: { id: type } } },
+          where: { patient: { id }, question: { type: { id: type } } },
           relations: ['patient', 'question', 'selectedOptions'],
         });
         return response.status(200).json(answers);
