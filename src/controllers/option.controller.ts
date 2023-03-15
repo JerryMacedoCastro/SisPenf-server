@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import { Option } from '../entities/option.entity';
-
+import AppDataSource from '../ormconfig';
 export default class QuestionOptionController {
   async CreateOption(request: Request, response: Response): Promise<Response> {
     try {
       const { description } = request.body;
-      const optionRepository = getRepository(Option);
+      const optionRepository = AppDataSource.getRepository(Option);
       const isExistingOption = await optionRepository.findOne({
-        description: description,
+        where: { description },
       });
 
       if (isExistingOption) throw new Error('The given option already exists');
@@ -24,7 +23,7 @@ export default class QuestionOptionController {
 
   async GetOptions(_request: Request, response: Response): Promise<Response> {
     try {
-      const optionRepository = getRepository(Option);
+      const optionRepository = AppDataSource.getRepository(Option);
       const options = await optionRepository.find();
 
       return response.status(200).send(options);
@@ -38,7 +37,7 @@ export default class QuestionOptionController {
     response: Response,
   ): Promise<Response> {
     try {
-      const optionRepository = getRepository(Option);
+      const optionRepository = AppDataSource.getRepository(Option);
       const options = await optionRepository.delete({});
 
       return response.status(200).send(options);

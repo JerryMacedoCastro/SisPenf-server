@@ -1,7 +1,6 @@
-import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { Hospital } from '../entities/hospital.entity';
-
+import AppDataSource from '../ormconfig';
 export default class HospitalController {
   public async createHospital(
     request: Request,
@@ -10,9 +9,11 @@ export default class HospitalController {
     const { name } = request.body;
 
     try {
-      const hospitalRepository = getRepository(Hospital);
+      const hospitalRepository = AppDataSource.getRepository(Hospital);
       const isExistingHospital = await hospitalRepository.findOne({
-        name: name,
+        where: {
+          name,
+        },
       });
 
       if (isExistingHospital)
@@ -37,7 +38,7 @@ export default class HospitalController {
     response: Response,
   ): Promise<Response> {
     try {
-      const hospitalRepository = getRepository(Hospital);
+      const hospitalRepository = AppDataSource.getRepository(Hospital);
       const hospitals = await hospitalRepository.find();
 
       return response.status(200).send(hospitals);

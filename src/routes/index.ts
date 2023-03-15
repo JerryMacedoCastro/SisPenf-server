@@ -62,7 +62,7 @@ routes.post('/patient', patientController.CreatePatient);
 routes.get('/patient/:patientId?', patientController.GetPatient);
 routes.delete('/patient', patientController.DeletePatients);
 
-routes.get('/answer', answerController.GetAnswers);
+routes.get('/answer/:patientId?/:questionType?', answerController.GetAnswers);
 routes.post('/answer', answerController.CreateAnswer);
 routes.post('/answers', answerController.CreateAnswers);
 routes.delete('/answer', answerController.DeleteAnswers);

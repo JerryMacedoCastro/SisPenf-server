@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
-import config from './ormconfig';
+import AppDataSource from './ormconfig';
 import routes from './routes';
 
 const start = async () => {
@@ -11,8 +10,12 @@ const start = async () => {
     if (!process.env.DATABASE_URL) {
       throw new Error('You need configure env vars');
     }
-    await createConnection(config);
-    console.log('Database conected');
+    await AppDataSource.initialize();
+    if (AppDataSource.isInitialized) {
+      console.log('Database conected...');
+    } else {
+      throw new Error('AppDataSource.isInitialized returned false');
+    }
   } catch (error) {
     console.log(`Error while connecting to the database! ${error.message}`);
   }
