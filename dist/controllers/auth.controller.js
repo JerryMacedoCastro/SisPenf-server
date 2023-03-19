@@ -27,9 +27,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = __importStar(require("jsonwebtoken"));
-const typeorm_1 = require("typeorm");
+const ormconfig_1 = __importDefault(require("../ormconfig"));
 const user_entity_1 = require("../entities/user.entity");
 class AuthController {
     login(request, response) {
@@ -40,7 +43,7 @@ class AuthController {
                 response.status(400).send();
             }
             // Get user from database
-            const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
+            const userRepository = ormconfig_1.default.getRepository(user_entity_1.User);
             let user;
             try {
                 user = yield userRepository.findOneOrFail({ where: { email } });
@@ -74,7 +77,7 @@ class AuthController {
                 return response.status(400).send({ error: 'No parameters' });
             }
             // Get user from the database
-            const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
+            const userRepository = ormconfig_1.default.getRepository(user_entity_1.User);
             let user;
             try {
                 user = yield userRepository.findOneOrFail(id);

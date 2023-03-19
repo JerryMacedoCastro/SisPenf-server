@@ -1,9 +1,11 @@
-import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { Question } from '../entities/question.entity';
 import { QuestionType } from '../entities/questionType.entity';
 import { Option } from '../entities/option.entity';
 import { Answer } from '../entities/answer.entity';
+import AppDataSource from '../ormconfig';
+import { Diagnosis } from '../entities/diagnosis.entity';
+import { diagnosesQuestionType } from '../helpers/diagnosis-type';
 
 export default class QuestionController {
   async CreateQuestion(
@@ -11,16 +13,17 @@ export default class QuestionController {
     response: Response,
   ): Promise<Response> {
     try {
-      const { description, type, allowComment, options } = request.body;
+      const { description, type, allowComment, options, diagnoses } =
+        request.body;
 
-      const optionRepository = getRepository(Option);
+      const optionRepository = AppDataSource.getRepository(Option);
 
       const optionsArray: { description: string }[] = options;
       let newOptions: Option[] = [];
 
       for (let index = 0; index < optionsArray.length; index++) {
         const isExistingOption = await optionRepository.findOne({
-          description: optionsArray[index].description,
+          where: { description: optionsArray[index].description },
         });
         if (isExistingOption) {
           newOptions = [...newOptions, isExistingOption];
@@ -32,24 +35,52 @@ export default class QuestionController {
           newOptions = [...newOptions, createdOption];
         }
       }
-      const questionRepository = getRepository(Question);
+      const questionRepository = AppDataSource.getRepository(Question);
       const isExistingDescription = await questionRepository.findOne({
-        description: description,
+        where: { description },
       });
       // if (isExistingDescription) {
       //   throw new Error('The given question already exist!');
       // }
-      const typeRepository = getRepository(QuestionType);
-      const isExistingType = typeRepository.findOne(type);
+      const typeRepository = AppDataSource.getRepository(QuestionType);
+      const isExistingType = await typeRepository.findOne({
+        where: { id: Number(type) },
+      });
       if (!isExistingType)
         throw new Error('The given question type does not exist!');
 
+      const diagnosesArray: { description: string }[] = diagnoses;
+      let newDiagnoses: Diagnosis[] = [];
+
+      if (isExistingType.id === diagnosesQuestionType.id) {
+        console.log('chegou aqui');
+        const diagnosisRepository = AppDataSource.getRepository(Diagnosis);
+
+        for (let index = 0; index < diagnosesArray.length; index++) {
+          const isExistingDiagnosis = await diagnosisRepository.findOne({
+            where: { description: diagnosesArray[index].description },
+          });
+
+          if (isExistingDiagnosis) {
+            newDiagnoses = [...newDiagnoses, isExistingDiagnosis];
+          } else {
+            const newDiagnosis = diagnosisRepository.create({
+              description: diagnosesArray[index].description,
+            });
+            const createdDiagnosis = await diagnosisRepository.save(
+              newDiagnosis,
+            );
+            newDiagnoses = [...newDiagnoses, createdDiagnosis];
+          }
+        }
+      }
       const newQuestion = questionRepository.create({
         id: isExistingDescription?.id,
         description,
         type,
         allowComment,
         options: newOptions,
+        diagnoses: newDiagnoses,
       });
 
       await questionRepository.save(newQuestion);
@@ -63,16 +94,16 @@ export default class QuestionController {
     try {
       const { questionType } = request.params;
       const type = Number(questionType);
-      const questionRepository = getRepository(Question);
+      const questionRepository = AppDataSource.getRepository(Question);
       let res;
       if (type) {
         res = await questionRepository.find({
-          where: { type: type },
-          relations: ['type', 'options'],
+          where: { type: { id: type } },
+          relations: ['type', 'options', 'diagnoses'],
         });
       } else {
         res = await questionRepository.find({
-          relations: ['type', 'options'],
+          relations: ['type', 'options', 'diagnoses'],
         });
       }
 
@@ -89,7 +120,7 @@ export default class QuestionController {
     try {
       const { id } = request.params;
       const questionId = Number(id);
-      const questionRepository = getRepository(Question);
+      const questionRepository = AppDataSource.getRepository(Question);
       let res;
       if (questionId) {
         res = await questionRepository.find({
@@ -110,18 +141,20 @@ export default class QuestionController {
     try {
       const { questionId } = request.params;
       const id = Number(questionId);
-      const questionRepository = getRepository(Question);
+      const questionRepository = AppDataSource.getRepository(Question);
 
       if (id) {
         const res = await questionRepository.findOne({ where: { id } });
 
         if (res) {
-          const answerRepository = getRepository(Answer);
+          const answerRepository = AppDataSource.getRepository(Answer);
           const asnswers = await answerRepository.find({
-            where: { question: res },
+            where: { question: { id: res.id } },
           });
           if (asnswers) {
-            await answerRepository.delete({ question: res });
+            await answerRepository.delete({
+              question: { id: res.id },
+            });
             await questionRepository.delete({ id: res.id });
           }
         }

@@ -1,21 +1,38 @@
-import path from 'path';
-import { ConnectionOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 
-const config: ConnectionOptions = {
+import { Answer } from './entities/answer.entity';
+import { Hospital } from './entities/hospital.entity';
+import { HospitalBed } from './entities/hospitalBed.entity';
+import { Infirmary } from './entities/infirmary.entity';
+import { Patient } from './entities/patient.entity';
+import { Question } from './entities/question.entity';
+import { QuestionType } from './entities/questionType.entity';
+import { User } from './entities/user.entity';
+import { Option } from './entities/option.entity';
+import { Diagnosis } from './entities/diagnosis.entity';
+
+const AppDataSource = new DataSource({
   port: 5432,
   url: process.env.DATABASE_URL,
   type: 'postgres',
   entities: [
-    path.join(__dirname, 'entities/**/*.entity.ts'),
-    path.join(__dirname, '**/*.entity.js'),
+    Answer,
+    Hospital,
+    HospitalBed,
+    Infirmary,
+    Option,
+    Patient,
+    Question,
+    QuestionType,
+    User,
+    Diagnosis,
   ],
+
   migrations: ['./src/migrations/**.ts'],
-  cli: {
-    migrationsDir: './src/migrations',
-  },
+
   subscribers: ['src/subscriber/**/*.ts'],
   synchronize: true,
   ssl: { rejectUnauthorized: false },
-};
+});
 
-export default config;
+export default AppDataSource;

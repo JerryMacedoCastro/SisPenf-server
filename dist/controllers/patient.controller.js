@@ -8,17 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
 const patient_entity_1 = require("../entities/patient.entity");
 const hospitalBed_entity_1 = require("../entities/hospitalBed.entity");
+const ormconfig_1 = __importDefault(require("../ormconfig"));
 class PatientController {
     CreatePatient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, birthdate, admissionDate, bed } = request.body;
                 const bedId = Number(bed);
-                const bedRepository = (0, typeorm_1.getRepository)(hospitalBed_entity_1.HospitalBed);
+                const bedRepository = ormconfig_1.default.getRepository(hospitalBed_entity_1.HospitalBed);
                 const isExistingbed = yield bedRepository.findOne({
                     where: { id: bedId, isFilled: false },
                 });
@@ -26,7 +29,7 @@ class PatientController {
                     throw new Error('The given hospital bed unavailable');
                 isExistingbed.isFilled = true;
                 yield bedRepository.save(isExistingbed);
-                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
+                const patientRepository = ormconfig_1.default.getRepository(patient_entity_1.Patient);
                 const newPatient = patientRepository.create({
                     name,
                     birthDate: birthdate,
@@ -42,13 +45,19 @@ class PatientController {
             }
         });
     }
-    GetPatient(_request, response) {
+    GetPatient(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
-                const patients = yield patientRepository.find({
+                const { patientId } = request.params;
+                const patientRepository = ormconfig_1.default.getRepository(patient_entity_1.Patient);
+                const options = {
                     relations: ['hospitalBed', 'hospitalBed.infirmary'],
-                });
+                };
+                const filteredOptions = {
+                    where: { id: Number(patientId) },
+                    relations: ['hospitalBed', 'hospitalBed.infirmary'],
+                };
+                const patients = yield patientRepository.find(patientId ? filteredOptions : options);
                 return response.status(200).send(patients);
             }
             catch (error) {
@@ -59,7 +68,7 @@ class PatientController {
     DeletePatients(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const patientRepository = (0, typeorm_1.getRepository)(patient_entity_1.Patient);
+                const patientRepository = ormconfig_1.default.getRepository(patient_entity_1.Patient);
                 const patients = yield patientRepository.delete({});
                 return response.status(200).send(patients);
             }

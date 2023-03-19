@@ -8,17 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
 const hospital_entity_1 = require("../entities/hospital.entity");
+const ormconfig_1 = __importDefault(require("../ormconfig"));
 class HospitalController {
     createHospital(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name } = request.body;
             try {
-                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
+                const hospitalRepository = ormconfig_1.default.getRepository(hospital_entity_1.Hospital);
                 const isExistingHospital = yield hospitalRepository.findOne({
-                    name: name,
+                    where: {
+                        name,
+                    },
                 });
                 if (isExistingHospital)
                     throw new Error(`The hospital ${isExistingHospital.name} already exists!!`);
@@ -37,7 +42,7 @@ class HospitalController {
     getAllHospitals(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const hospitalRepository = (0, typeorm_1.getRepository)(hospital_entity_1.Hospital);
+                const hospitalRepository = ormconfig_1.default.getRepository(hospital_entity_1.Hospital);
                 const hospitals = yield hospitalRepository.find();
                 return response.status(200).send(hospitals);
             }

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { getRepository } from 'typeorm';
+import AppDataSource from '../ormconfig';
 
 import { User } from '../entities/user.entity';
 
@@ -13,7 +13,7 @@ class AuthController {
     }
 
     // Get user from database
-    const userRepository = getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
     let user: User;
     try {
       user = await userRepository.findOneOrFail({ where: { email } });
@@ -56,7 +56,7 @@ class AuthController {
     }
 
     // Get user from the database
-    const userRepository = getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
     let user: User;
     try {
       user = await userRepository.findOneOrFail(id);

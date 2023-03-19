@@ -9,6 +9,7 @@ import QuestionOptionController from '../controllers/option.controller';
 import PatientController from '../controllers/patient.controller';
 import AnserController from '../controllers/answer.controller';
 import AuthController from '../controllers/auth.controller';
+import DiagnosisController from '../controllers/diagnosis.controller';
 import { checkJwt } from '../middlewares/checkJwt';
 
 const routes = Router();
@@ -23,6 +24,7 @@ const questionOptionController = new QuestionOptionController();
 const patientController = new PatientController();
 const answerController = new AnserController();
 const authController = new AuthController();
+const diagnosisController = new DiagnosisController();
 
 routes.get('/', (_req, res) => {
   res.send('Hello darkness my old friend!');
@@ -58,11 +60,15 @@ routes.post('/option', questionOptionController.CreateOption);
 routes.get('/option', questionOptionController.GetOptions);
 routes.delete('/option', questionOptionController.DeleteOptions);
 
+routes.post('/diagnosis', diagnosisController.CreateDiagnosis);
+routes.get('/diagnosis', diagnosisController.GetDiagnoses);
+routes.delete('/diagnosis', diagnosisController.DeleteDiagnoses);
+
 routes.post('/patient', patientController.CreatePatient);
-routes.get('/patient', patientController.GetPatient);
+routes.get('/patient/:patientId?', patientController.GetPatient);
 routes.delete('/patient', patientController.DeletePatients);
 
-routes.get('/answer', answerController.GetAnswers);
+routes.get('/answer/:patientId?/:questionType?', answerController.GetAnswers);
 routes.post('/answer', answerController.CreateAnswer);
 routes.post('/answers', answerController.CreateAnswers);
 routes.delete('/answer', answerController.DeleteAnswers);

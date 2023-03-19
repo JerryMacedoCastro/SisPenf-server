@@ -1,43 +1,67 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import { Answer } from '../entities/answer.entity';
 import { Option } from '../entities/option.entity';
 import { Patient } from '../entities/patient.entity';
+import { Diagnosis } from '../entities/diagnosis.entity';
 import { Question } from '../entities/question.entity';
 import { User } from '../entities/user.entity';
+import AppDataSource from '../ormconfig';
+import { diagnosesQuestionType } from '../helpers/diagnosis-type';
 
+interface IDiagnosis {
+  description: string;
+}
 export default class AnserController {
   async CreateAnswer(request: Request, response: Response): Promise<Response> {
     try {
-      const { userId, patientId, questionId, options, comment } = request.body;
+      const { userId, patientId, questionId, options, comment, diagnoses } =
+        request.body;
+      const optionsArray: { description: string }[] = options;
+      const diagnosesArray: { description: string }[] = diagnoses;
 
-      const answers: { option: number }[] = options;
-
-      const user = await getRepository(User).findOne(userId);
+      const user = await AppDataSource.getRepository(User).findOne({
+        where: { id: Number(userId) },
+      });
       if (!user) throw new Error('The given user does not exists!!');
 
-      const patient = await getRepository(Patient).findOne(patientId);
+      const patient = await AppDataSource.getRepository(Patient).findOne({
+        where: { id: Number(patientId) },
+      });
       if (!patient) throw new Error('The given patient does not exists!!');
 
-      const question = await getRepository(Question).findOne({
-        where: { id: questionId },
-        relations: ['options'],
+      const question = await AppDataSource.getRepository(Question).findOne({
+        where: { id: Number(questionId) },
+        relations: ['options', 'type', 'diagnoses'],
       });
       if (!question) throw new Error('The given question does not exists!!');
 
       let selectedOptions: Option[] = [];
-      for (let index = 0; index < answers.length; index++) {
-        const isValidAnswer = question.options.find(
-          op => op.id === answers[index].option,
-        );
-        if (!isValidAnswer) throw new Error('Invalid answer');
-        selectedOptions = [...selectedOptions, isValidAnswer];
+      for (let index = 0; index < optionsArray.length; index++) {
+        const isValidOption = question.options.find(option => {
+          return option.description === optionsArray[index].description;
+        });
+
+        if (!isValidOption) throw new Error('Invalid option');
+        selectedOptions = [...selectedOptions, isValidOption];
       }
 
-      const answerRepository = getRepository(Answer);
+      let selectedDiagnoses: Diagnosis[] = [];
+      if (question.type.id === diagnosesQuestionType.id) {
+        for (let index = 0; index < diagnosesArray.length; index++) {
+          const isValidDiagnosis = question.diagnoses.find(
+            diagnosis =>
+              diagnosis.description === diagnosesArray[index].description,
+          );
+
+          if (!isValidDiagnosis) throw new Error('Invalid diagnosis');
+          selectedDiagnoses = [...selectedDiagnoses, isValidDiagnosis];
+        }
+      }
+
+      const answerRepository = AppDataSource.getRepository(Answer);
 
       const isUpdateQuestion = await answerRepository.findOne({
-        where: { patient, question },
+        where: { patient: { id: patient.id }, question: { id: question.id } },
       });
 
       const newAnswer = answerRepository.create({
@@ -47,6 +71,7 @@ export default class AnserController {
         patient,
         selectedOptions,
         comment,
+        selectedDiagnoses,
       });
 
       const createdAnswer = await answerRepository.save(newAnswer);
@@ -70,30 +95,32 @@ export default class AnserController {
       if (!questions.length || answeredQuestions.length === 0)
         throw new Error('No answers were given!!');
 
-      const userRepo = getRepository(User);
+      const userRepo = AppDataSource.getRepository(User);
       const user = await userRepo.findOne(userId);
 
       if (!user) throw new Error('The given user does not exists!!');
 
-      const patient = await getRepository(Patient).findOne(patientId);
+      const patient = await AppDataSource.getRepository(Patient).findOne({
+        where: { id: Number(patientId) },
+      });
       if (!patient) throw new Error('The given patient does not exists!!');
 
       let createdAnswers: Answer[] = [];
       answeredQuestions.forEach(async answer => {
-        const question = await getRepository(Question).findOne({
+        const question = await AppDataSource.getRepository(Question).findOne({
           where: { description: answer.question },
           relations: ['options'],
         });
         if (!question) throw new Error('The given question does not exists!!');
-        const answerRepository = getRepository(Answer);
+        const answerRepository = AppDataSource.getRepository(Answer);
         const isUpdateQuestion = await answerRepository.findOne({
-          where: { patient, question },
+          where: { patient: { id: patient.id }, question: { id: question.id } },
         });
 
         let selectedOptions: Option[] = [];
         if (question.options.length > 0) {
           console.log(answer.option);
-          const optionRepository = getRepository(Option);
+          const optionRepository = AppDataSource.getRepository(Option);
           const selectedOption = await optionRepository.findOne({
             where: { description: answer.option },
           });
@@ -120,11 +147,32 @@ export default class AnserController {
     }
   }
 
-  async GetAnswers(_request: Request, response: Response): Promise<Response> {
+  async GetAnswers(request: Request, response: Response): Promise<Response> {
     try {
-      const answerRepository = getRepository(Answer);
+      const { patientId, questionType } = request.params;
+
+      const answerRepository = AppDataSource.getRepository(Answer);
+      if (patientId && questionType) {
+        const id = Number(patientId);
+        const type = Number(questionType);
+        const answers = await answerRepository.find({
+          where: { id, question: { type: { id: type } } },
+          relations: [
+            'patient',
+            'question',
+            'selectedOptions',
+            'selectedDiagnoses',
+          ],
+        });
+        return response.status(200).json(answers);
+      }
       const answers = await answerRepository.find({
-        relations: ['patient', 'question', 'selectedOptions'],
+        relations: [
+          'patient',
+          'question',
+          'selectedOptions',
+          'selectedDiagnoses',
+        ],
       });
 
       return response.status(200).json(answers);
@@ -138,7 +186,7 @@ export default class AnserController {
     response: Response,
   ): Promise<Response> {
     try {
-      const answerRepository = getRepository(Answer);
+      const answerRepository = AppDataSource.getRepository(Answer);
       const answers = await answerRepository.delete({});
 
       return response.status(200).json(answers);

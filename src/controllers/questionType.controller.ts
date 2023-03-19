@@ -1,7 +1,6 @@
 import { QuestionType } from '../entities/questionType.entity';
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-
+import AppDataSource from '../ormconfig';
 export default class QuestionTypeControleer {
   async CreateQuestionType(
     request: Request,
@@ -10,7 +9,7 @@ export default class QuestionTypeControleer {
     try {
       const { label } = request.body;
 
-      const questionTypeRepository = getRepository(QuestionType);
+      const questionTypeRepository = AppDataSource.getRepository(QuestionType);
 
       const newQuestionType = questionTypeRepository.create({
         label,
@@ -30,7 +29,7 @@ export default class QuestionTypeControleer {
     response: Response,
   ): Promise<Response> {
     try {
-      const questionTypeRepository = getRepository(QuestionType);
+      const questionTypeRepository = AppDataSource.getRepository(QuestionType);
 
       const res = await questionTypeRepository.find();
 
