@@ -8,16 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
+const ormconfig_1 = __importDefault(require("../ormconfig"));
 const user_entity_1 = require("../entities/user.entity");
 class UserController {
     createUser(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, name, cpf, position, password } = request.body;
             try {
-                const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
-                const isExistingUser = yield userRepository.findOne({ email: email });
+                const userRepository = ormconfig_1.default.getRepository(user_entity_1.User);
+                const isExistingUser = yield userRepository.findOne({
+                    where: { email: email },
+                });
                 if (isExistingUser)
                     throw new Error(`The email ${isExistingUser.email} already exists!!`);
                 const user = userRepository.create({
@@ -41,9 +46,10 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId } = request.params;
-                const userRepository = (0, typeorm_1.getRepository)(user_entity_1.User);
+                const userRepository = ormconfig_1.default.getRepository(user_entity_1.User);
                 if (userId) {
-                    const user = yield userRepository.findOne(userId, {
+                    const user = yield userRepository.findOne({
+                        where: { id: Number(userId) },
                         select: ['id', 'email', 'name', 'position'],
                     });
                     if (user)
@@ -51,7 +57,7 @@ class UserController {
                     throw new Error('User not found');
                 }
                 const allUsers = yield userRepository.find({
-                // select: ['id', 'email', 'name', 'position'],
+                    select: ['id', 'email', 'name', 'position'],
                 });
                 return response.status(200).send(allUsers);
             }

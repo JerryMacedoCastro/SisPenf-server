@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Question = void 0;
 const typeorm_1 = require("typeorm");
 const answer_entity_1 = require("./answer.entity");
+const diagnosis_entity_1 = require("./diagnosis.entity");
 const option_entity_1 = require("./option.entity");
 const questionType_entity_1 = require("./questionType.entity");
 let Question = class Question {
@@ -43,6 +44,11 @@ __decorate([
     (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Question.prototype, "options", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => diagnosis_entity_1.Diagnosis, diagnosis => diagnosis.questions),
+    (0, typeorm_1.JoinTable)(),
+    __metadata("design:type", Array)
+], Question.prototype, "diagnoses", void 0);
 Question = __decorate([
     (0, typeorm_1.Entity)()
 ], Question);
