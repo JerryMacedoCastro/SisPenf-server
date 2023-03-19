@@ -2,14 +2,22 @@ import { Request, Response } from 'express';
 import { Answer } from '../entities/answer.entity';
 import { Option } from '../entities/option.entity';
 import { Patient } from '../entities/patient.entity';
+import { Diagnosis } from '../entities/diagnosis.entity';
 import { Question } from '../entities/question.entity';
 import { User } from '../entities/user.entity';
 import AppDataSource from '../ormconfig';
+import { diagnosesQuestionType } from '../helpers/diagnosis-type';
+
+interface IDiagnosis {
+  description: string;
+}
 export default class AnserController {
   async CreateAnswer(request: Request, response: Response): Promise<Response> {
     try {
-      const { userId, patientId, questionId, options, comment } = request.body;
-      const answers: { option: number }[] = options;
+      const { userId, patientId, questionId, options, comment, diagnoses } =
+        request.body;
+      const optionsArray: { description: string }[] = options;
+      const diagnosesArray: { description: string }[] = diagnoses;
 
       const user = await AppDataSource.getRepository(User).findOne({
         where: { id: Number(userId) },
@@ -22,18 +30,32 @@ export default class AnserController {
       if (!patient) throw new Error('The given patient does not exists!!');
 
       const question = await AppDataSource.getRepository(Question).findOne({
-        where: { id: questionId },
-        relations: ['options'],
+        where: { id: Number(questionId) },
+        relations: ['options', 'type', 'diagnoses'],
       });
       if (!question) throw new Error('The given question does not exists!!');
 
       let selectedOptions: Option[] = [];
-      for (let index = 0; index < answers.length; index++) {
-        const isValidAnswer = question.options.find(
-          (op: { id: number }) => op.id === answers[index].option,
-        );
-        if (!isValidAnswer) throw new Error('Invalid answer');
-        selectedOptions = [...selectedOptions, isValidAnswer];
+      for (let index = 0; index < optionsArray.length; index++) {
+        const isValidOption = question.options.find(option => {
+          return option.description === optionsArray[index].description;
+        });
+
+        if (!isValidOption) throw new Error('Invalid option');
+        selectedOptions = [...selectedOptions, isValidOption];
+      }
+
+      let selectedDiagnoses: Diagnosis[] = [];
+      if (question.type.id === diagnosesQuestionType.id) {
+        for (let index = 0; index < diagnosesArray.length; index++) {
+          const isValidDiagnosis = question.diagnoses.find(
+            diagnosis =>
+              diagnosis.description === diagnosesArray[index].description,
+          );
+
+          if (!isValidDiagnosis) throw new Error('Invalid diagnosis');
+          selectedDiagnoses = [...selectedDiagnoses, isValidDiagnosis];
+        }
       }
 
       const answerRepository = AppDataSource.getRepository(Answer);
@@ -49,6 +71,7 @@ export default class AnserController {
         patient,
         selectedOptions,
         comment,
+        selectedDiagnoses,
       });
 
       const createdAnswer = await answerRepository.save(newAnswer);
@@ -134,12 +157,22 @@ export default class AnserController {
         const type = Number(questionType);
         const answers = await answerRepository.find({
           where: { id, question: { type: { id: type } } },
-          relations: ['patient', 'question', 'selectedOptions'],
+          relations: [
+            'patient',
+            'question',
+            'selectedOptions',
+            'selectedDiagnoses',
+          ],
         });
         return response.status(200).json(answers);
       }
       const answers = await answerRepository.find({
-        relations: ['patient', 'question', 'selectedOptions'],
+        relations: [
+          'patient',
+          'question',
+          'selectedOptions',
+          'selectedDiagnoses',
+        ],
       });
 
       return response.status(200).json(answers);

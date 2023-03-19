@@ -9,6 +9,8 @@ import { Question } from './entities/question.entity';
 import { QuestionType } from './entities/questionType.entity';
 import { User } from './entities/user.entity';
 import { Option } from './entities/option.entity';
+import { Diagnosis } from './entities/diagnosis.entity';
+
 const AppDataSource = new DataSource({
   port: 5432,
   url: process.env.DATABASE_URL,
@@ -23,6 +25,7 @@ const AppDataSource = new DataSource({
     Question,
     QuestionType,
     User,
+    Diagnosis,
   ],
 
   migrations: ['./src/migrations/**.ts'],
