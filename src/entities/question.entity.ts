@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { IQuestion } from '../interfaces/question.interface';
 import { Answer } from './answer.entity';
+import { Diagnosis } from './diagnosis.entity';
 import { Option } from './option.entity';
 import { QuestionType } from './questionType.entity';
 
@@ -34,4 +35,8 @@ export class Question implements IQuestion {
   @ManyToMany(() => Option, option => option.questions)
   @JoinTable()
   options: Option[];
+
+  @ManyToMany(() => Diagnosis, diagnosis => diagnosis.questions)
+  @JoinTable()
+  diagnoses: Diagnosis[];
 }

@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IAnswer } from '../interfaces/answer.entity';
+import { Diagnosis } from './diagnosis.entity';
 import { Option } from './option.entity';
 import { Patient } from './patient.entity';
 import { Question } from './question.entity';
@@ -38,6 +39,10 @@ export class Answer implements IAnswer {
   @ManyToMany(() => Option)
   @JoinTable()
   selectedOptions: Option[];
+
+  @ManyToMany(() => Diagnosis)
+  @JoinTable()
+  selectedDiagnoses: Diagnosis[];
 
   @Column()
   comment: string;
