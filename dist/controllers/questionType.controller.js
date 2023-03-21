@@ -8,15 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const questionType_entity_1 = require("../entities/questionType.entity");
-const typeorm_1 = require("typeorm");
+const ormconfig_1 = __importDefault(require("../ormconfig"));
 class QuestionTypeControleer {
     CreateQuestionType(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { label } = request.body;
-                const questionTypeRepository = (0, typeorm_1.getRepository)(questionType_entity_1.QuestionType);
+                const questionTypeRepository = ormconfig_1.default.getRepository(questionType_entity_1.QuestionType);
                 const newQuestionType = questionTypeRepository.create({
                     label,
                     isActive: true,
@@ -32,7 +35,7 @@ class QuestionTypeControleer {
     GetQuestionTypes(_request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const questionTypeRepository = (0, typeorm_1.getRepository)(questionType_entity_1.QuestionType);
+                const questionTypeRepository = ormconfig_1.default.getRepository(questionType_entity_1.QuestionType);
                 const res = yield questionTypeRepository.find();
                 return response.status(200).send(res);
             }

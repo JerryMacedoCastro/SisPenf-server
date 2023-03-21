@@ -1,5 +1,6 @@
 import { IQuestion } from '../interfaces/question.interface';
 import { Answer } from './answer.entity';
+import { Diagnosis } from './diagnosis.entity';
 import { Option } from './option.entity';
 import { QuestionType } from './questionType.entity';
 export declare class Question implements IQuestion {
@@ -9,4 +10,5 @@ export declare class Question implements IQuestion {
     allowComment: boolean;
     answers: Answer[];
     options: Option[];
+    diagnoses: Diagnosis[];
 }

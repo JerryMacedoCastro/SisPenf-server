@@ -7,6 +7,9 @@
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "start": "node dist/server.js"
   },
+  "engines": {
+    "node": ">=14.18.0"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

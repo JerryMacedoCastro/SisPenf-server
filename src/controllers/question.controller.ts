@@ -4,6 +4,8 @@ import { QuestionType } from '../entities/questionType.entity';
 import { Option } from '../entities/option.entity';
 import { Answer } from '../entities/answer.entity';
 import AppDataSource from '../ormconfig';
+import { Diagnosis } from '../entities/diagnosis.entity';
+import { diagnosesQuestionType } from '../helpers/diagnosis-type';
 
 export default class QuestionController {
   async CreateQuestion(
@@ -11,7 +13,8 @@ export default class QuestionController {
     response: Response,
   ): Promise<Response> {
     try {
-      const { description, type, allowComment, options } = request.body;
+      const { description, type, allowComment, options, diagnoses } =
+        request.body;
 
       const optionRepository = AppDataSource.getRepository(Option);
 
@@ -40,16 +43,44 @@ export default class QuestionController {
       //   throw new Error('The given question already exist!');
       // }
       const typeRepository = AppDataSource.getRepository(QuestionType);
-      const isExistingType = typeRepository.findOne(type);
+      const isExistingType = await typeRepository.findOne({
+        where: { id: Number(type) },
+      });
       if (!isExistingType)
         throw new Error('The given question type does not exist!');
 
+      const diagnosesArray: { description: string }[] = diagnoses;
+      let newDiagnoses: Diagnosis[] = [];
+
+      if (isExistingType.id === diagnosesQuestionType.id) {
+        console.log('chegou aqui');
+        const diagnosisRepository = AppDataSource.getRepository(Diagnosis);
+
+        for (let index = 0; index < diagnosesArray.length; index++) {
+          const isExistingDiagnosis = await diagnosisRepository.findOne({
+            where: { description: diagnosesArray[index].description },
+          });
+
+          if (isExistingDiagnosis) {
+            newDiagnoses = [...newDiagnoses, isExistingDiagnosis];
+          } else {
+            const newDiagnosis = diagnosisRepository.create({
+              description: diagnosesArray[index].description,
+            });
+            const createdDiagnosis = await diagnosisRepository.save(
+              newDiagnosis,
+            );
+            newDiagnoses = [...newDiagnoses, createdDiagnosis];
+          }
+        }
+      }
       const newQuestion = questionRepository.create({
         id: isExistingDescription?.id,
         description,
         type,
         allowComment,
         options: newOptions,
+        diagnoses: newDiagnoses,
       });
 
       await questionRepository.save(newQuestion);
@@ -68,11 +99,11 @@ export default class QuestionController {
       if (type) {
         res = await questionRepository.find({
           where: { type: { id: type } },
-          relations: ['type', 'options'],
+          relations: ['type', 'options', 'diagnoses'],
         });
       } else {
         res = await questionRepository.find({
-          relations: ['type', 'options'],
+          relations: ['type', 'options', 'diagnoses'],
         });
       }
 

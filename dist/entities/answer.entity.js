@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Answer = void 0;
 const typeorm_1 = require("typeorm");
+const diagnosis_entity_1 = require("./diagnosis.entity");
 const option_entity_1 = require("./option.entity");
 const patient_entity_1 = require("./patient.entity");
 const question_entity_1 = require("./question.entity");
@@ -45,6 +46,11 @@ __decorate([
     (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Answer.prototype, "selectedOptions", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => diagnosis_entity_1.Diagnosis),
+    (0, typeorm_1.JoinTable)(),
+    __metadata("design:type", Array)
+], Answer.prototype, "selectedDiagnoses", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

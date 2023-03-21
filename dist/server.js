@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 require("dotenv/config");
-const typeorm_1 = require("typeorm");
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const ormconfig_1 = __importDefault(require("./ormconfig"));
@@ -24,8 +23,13 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!process.env.DATABASE_URL) {
             throw new Error('You need configure env vars');
         }
-        yield (0, typeorm_1.createConnection)(ormconfig_1.default);
-        console.log('Database conected');
+        yield ormconfig_1.default.initialize();
+        if (ormconfig_1.default.isInitialized) {
+            console.log('Database conected...');
+        }
+        else {
+            throw new Error('AppDataSource.isInitialized returned false');
+        }
     }
     catch (error) {
         console.log(`Error while connecting to the database! ${error.message}`);

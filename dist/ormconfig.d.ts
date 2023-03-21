@@ -1,3 +1,3 @@
-import { ConnectionOptions } from 'typeorm';
-declare const config: ConnectionOptions;
-export default config;
+import { DataSource } from 'typeorm';
+declare const AppDataSource: DataSource;
+export default AppDataSource;
