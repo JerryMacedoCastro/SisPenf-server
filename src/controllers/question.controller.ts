@@ -53,7 +53,6 @@ export default class QuestionController {
       let newDiagnoses: Diagnosis[] = [];
 
       if (isExistingType.id === diagnosesQuestionType.id) {
-        console.log('chegou aqui');
         const diagnosisRepository = AppDataSource.getRepository(Diagnosis);
 
         for (let index = 0; index < diagnosesArray.length; index++) {
