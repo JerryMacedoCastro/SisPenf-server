@@ -96,7 +96,7 @@ export default class AnserController {
         throw new Error('No answers were given!!');
 
       const userRepo = AppDataSource.getRepository(User);
-      const user = await userRepo.findOne(userId);
+      const user = await userRepo.findOne({ where: { id: Number(userId) } });
 
       if (!user) throw new Error('The given user does not exists!!');
 
