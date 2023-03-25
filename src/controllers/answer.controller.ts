@@ -14,7 +14,7 @@ interface IDiagnosis {
 export default class AnserController {
   async CreateAnswer(request: Request, response: Response): Promise<Response> {
     try {
-      const { userId, patientId, questionId, options, comment, diagnoses } =
+      const { userId, patientId, question, options, comment, diagnoses } =
         request.body;
       const optionsArray: { description: string }[] = options;
       const diagnosesArray: { description: string }[] = diagnoses;
@@ -29,15 +29,18 @@ export default class AnserController {
       });
       if (!patient) throw new Error('The given patient does not exists!!');
 
-      const question = await AppDataSource.getRepository(Question).findOne({
-        where: { id: Number(questionId) },
+      const selectedQuestion = await AppDataSource.getRepository(
+        Question,
+      ).findOne({
+        where: { description: question },
         relations: ['options', 'type', 'diagnoses'],
       });
-      if (!question) throw new Error('The given question does not exists!!');
+      if (!selectedQuestion)
+        throw new Error('The given question does not exists!!');
 
       let selectedOptions: Option[] = [];
       for (let index = 0; index < optionsArray.length; index++) {
-        const isValidOption = question.options.find(option => {
+        const isValidOption = selectedQuestion.options.find(option => {
           return option.description === optionsArray[index].description;
         });
 
@@ -46,9 +49,9 @@ export default class AnserController {
       }
 
       let selectedDiagnoses: Diagnosis[] = [];
-      if (question.type.id === diagnosesQuestionType.id) {
+      if (selectedQuestion.type.id === diagnosesQuestionType.id) {
         for (let index = 0; index < diagnosesArray.length; index++) {
-          const isValidDiagnosis = question.diagnoses.find(
+          const isValidDiagnosis = selectedQuestion.diagnoses.find(
             diagnosis =>
               diagnosis.description === diagnosesArray[index].description,
           );
@@ -61,13 +64,16 @@ export default class AnserController {
       const answerRepository = AppDataSource.getRepository(Answer);
 
       const isUpdateQuestion = await answerRepository.findOne({
-        where: { patient: { id: patient.id }, question: { id: question.id } },
+        where: {
+          patient: { id: patient.id },
+          question: { id: selectedQuestion.id },
+        },
       });
 
       const newAnswer = answerRepository.create({
         id: isUpdateQuestion?.id,
         user,
-        question,
+        question: selectedQuestion,
         patient,
         selectedOptions,
         comment,
