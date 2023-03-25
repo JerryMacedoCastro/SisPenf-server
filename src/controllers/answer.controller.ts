@@ -98,6 +98,8 @@ export default class AnserController {
         option?: string;
       }[] = questions;
 
+      const errorQuestions: string[] = [];
+
       if (!questions.length || answeredQuestions.length === 0)
         throw new Error('No answers were given!!');
 
@@ -112,39 +114,56 @@ export default class AnserController {
       if (!patient) throw new Error('The given patient does not exists!!');
 
       let createdAnswers: Answer[] = [];
-      answeredQuestions.forEach(async answer => {
+      for (let i = 0; i < answeredQuestions.length; i++) {
+        const answer = answeredQuestions[i];
+
         const question = await AppDataSource.getRepository(Question).findOne({
           where: { description: answer.question },
           relations: ['options'],
         });
-        if (!question) throw new Error('The given question does not exists!!');
-        const answerRepository = AppDataSource.getRepository(Answer);
-        const isUpdateQuestion = await answerRepository.findOne({
-          where: { patient: { id: patient.id }, question: { id: question.id } },
-        });
-
-        let selectedOptions: Option[] = [];
-        if (question.options.length > 0) {
-          console.log(answer.option);
-          const optionRepository = AppDataSource.getRepository(Option);
-          const selectedOption = await optionRepository.findOne({
-            where: { description: answer.option },
+        console.log(question);
+        if (!question) {
+          console.log('entrou');
+          errorQuestions.push(answer.question);
+          console.log(errorQuestions.length);
+        } else {
+          const answerRepository = AppDataSource.getRepository(Answer);
+          const isUpdateQuestion = await answerRepository.findOne({
+            where: {
+              patient: { id: patient.id },
+              question: { id: question.id },
+            },
           });
-          if (!selectedOption) throw new Error('Invalid option');
-          selectedOptions = [selectedOption];
-        }
-        const newAnswer = answerRepository.create({
-          id: isUpdateQuestion?.id,
-          user,
-          comment: answer.comment || '',
-          question,
-          patient,
-          selectedOptions,
-        });
 
-        const createdAnswer = await answerRepository.save(newAnswer);
-        createdAnswers = [...createdAnswers, createdAnswer];
-      });
+          let selectedOptions: Option[] = [];
+          if (question.options.length > 0) {
+            console.log(answer.option);
+            const optionRepository = AppDataSource.getRepository(Option);
+            const selectedOption = await optionRepository.findOne({
+              where: { description: answer.option },
+            });
+            if (!selectedOption) throw new Error('Invalid option');
+            selectedOptions = [selectedOption];
+          }
+          const newAnswer = answerRepository.create({
+            id: isUpdateQuestion?.id,
+            user,
+            comment: answer.comment || '',
+            question,
+            patient,
+            selectedOptions,
+          });
+
+          const createdAnswer = await answerRepository.save(newAnswer);
+          createdAnswers = [...createdAnswers, createdAnswer];
+        }
+      }
+      console.log(errorQuestions.length);
+      if (errorQuestions.length > 0) {
+        throw new Error(
+          `Questions not created: ${JSON.stringify(errorQuestions)}`,
+        );
+      }
       return response
         .status(200)
         .send({ Message: 'All answers created or updated!' });
