@@ -1,27 +1,25 @@
 import { Request, Response } from 'express';
 import { Patient } from '../entities/patient.entity';
-import { HospitalBed } from '../entities/hospitalBed.entity';
 import AppDataSource from '../ormconfig';
 
 export default class PatientController {
   async CreatePatient(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, birthdate, admissionDate, bed } = request.body;
-      const bedId = Number(bed);
-      const bedRepository = AppDataSource.getRepository(HospitalBed);
-      const isExistingbed = await bedRepository.findOne({
-        where: { id: bedId, isFilled: false },
-      });
-      if (!isExistingbed) throw new Error('The given hospital bed unavailable');
+      const { name, birthdate, admissionDate } = request.body;
+      // const bedId = Number(bed);
+      // const bedRepository = AppDataSource.getRepository(HospitalBed);
+      // const isExistingbed = await bedRepository.findOne({
+      //   where: { id: bedId, isFilled: false },
+      // });
+      // if (!isExistingbed) throw new Error('The given hospital bed unavailable');
 
-      isExistingbed.isFilled = true;
-      await bedRepository.save(isExistingbed);
+      // isExistingbed.isFilled = true;
+      // await bedRepository.save(isExistingbed);
 
       const patientRepository = AppDataSource.getRepository(Patient);
       const newPatient = patientRepository.create({
         name,
         birthDate: birthdate,
-        hospitalBed: isExistingbed,
         admissionDate: admissionDate,
         isActive: true,
       });

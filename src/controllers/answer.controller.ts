@@ -123,9 +123,7 @@ export default class AnserController {
         });
         console.log(question);
         if (!question) {
-          console.log('entrou');
           errorQuestions.push(answer.question);
-          console.log(errorQuestions.length);
         } else {
           const answerRepository = AppDataSource.getRepository(Answer);
           const isUpdateQuestion = await answerRepository.findOne({
@@ -137,7 +135,6 @@ export default class AnserController {
 
           let selectedOptions: Option[] = [];
           if (question.options.length > 0) {
-            console.log(answer.option);
             const optionRepository = AppDataSource.getRepository(Option);
             const selectedOption = await optionRepository.findOne({
               where: { description: answer.option },
@@ -158,7 +155,6 @@ export default class AnserController {
           createdAnswers = [...createdAnswers, createdAnswer];
         }
       }
-      console.log(errorQuestions.length);
       if (errorQuestions.length > 0) {
         throw new Error(
           `Questions not created: ${JSON.stringify(errorQuestions)}`,
