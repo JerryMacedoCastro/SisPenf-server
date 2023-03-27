@@ -23,7 +23,9 @@ export default class QuestionController {
 
       for (let index = 0; index < optionsArray.length; index++) {
         const isExistingOption = await optionRepository.findOne({
-          where: { description: optionsArray[index].description },
+          where: {
+            description: optionsArray[index].description,
+          },
         });
         if (isExistingOption) {
           newOptions = [...newOptions, isExistingOption];
@@ -37,7 +39,7 @@ export default class QuestionController {
       }
       const questionRepository = AppDataSource.getRepository(Question);
       const isExistingDescription = await questionRepository.findOne({
-        where: { description },
+        where: { description, type: { id: Number(type) } },
       });
       // if (isExistingDescription) {
       //   throw new Error('The given question already exist!');
