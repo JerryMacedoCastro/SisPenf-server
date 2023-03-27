@@ -121,7 +121,6 @@ export default class AnserController {
           where: { description: answer.question },
           relations: ['options'],
         });
-        console.log(question);
         if (!question) {
           errorQuestions.push(answer.question);
         } else {

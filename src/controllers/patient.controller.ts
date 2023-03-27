@@ -5,7 +5,7 @@ import AppDataSource from '../ormconfig';
 export default class PatientController {
   async CreatePatient(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, birthdate, admissionDate } = request.body;
+      const { id, name, birthdate, admissionDate } = request.body;
       // const bedId = Number(bed);
       // const bedRepository = AppDataSource.getRepository(HospitalBed);
       // const isExistingbed = await bedRepository.findOne({
@@ -15,18 +15,31 @@ export default class PatientController {
 
       // isExistingbed.isFilled = true;
       // await bedRepository.save(isExistingbed);
-
       const patientRepository = AppDataSource.getRepository(Patient);
-      const newPatient = patientRepository.create({
-        name,
-        birthDate: birthdate,
-        admissionDate: admissionDate,
-        isActive: true,
-      });
-
-      const patient = await patientRepository.save(newPatient);
-
-      return response.send(patient);
+      if (id) {
+        const patienttId = Number(id);
+        const updatedPatient = await patientRepository.findOne({
+          where: { id: patienttId },
+        });
+        if (updatedPatient) {
+          updatedPatient.name = name;
+          updatedPatient.admissionDate = admissionDate;
+          updatedPatient.birthDate = birthdate;
+          const patient = await patientRepository.save(updatedPatient);
+          return response.send(patient);
+        } else {
+          throw new Error('Patient not found');
+        }
+      } else {
+        const newPatient = patientRepository.create({
+          name,
+          birthDate: birthdate,
+          admissionDate: admissionDate,
+          isActive: true,
+        });
+        const patient = await patientRepository.save(newPatient);
+        return response.send(patient);
+      }
     } catch (error) {
       return response.status(400).send(error.message);
     }
