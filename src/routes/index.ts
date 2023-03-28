@@ -58,7 +58,7 @@ routes.delete('/question/:questionId', questionController.DeleteQuestionById);
 
 routes.post('/option', questionOptionController.CreateOption);
 routes.get('/option', questionOptionController.GetOptions);
-routes.delete('/option', questionOptionController.DeleteOptions);
+routes.delete('/option/:id', questionOptionController.DeleteOptionById);
 
 routes.post('/diagnosis', diagnosisController.CreateDiagnosis);
 routes.get('/diagnosis', diagnosisController.GetDiagnoses);
